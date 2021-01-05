@@ -1,0 +1,38 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Szczegóły specjalizacji</h2>
+    <form class="form-spec">
+
+            <label for="name">Nazwa: <abbr title="required" aria-label="required">*</abbr></label>
+            <input type="text" name="Nazwa" value="Specjalista do samochodów hybrydowych" id="name" disabled/>
+            <span id="errorName" class="errors-text"></span>
+
+            <label for="where">Gdzie uzyskano: <abbr title="required" aria-label="required">*</abbr></label>
+            <input type="text" name="where" value="Politechnika Warszawska" id="where" disabled/>
+            <span id="errorWhere" class="errors-text"></span>
+
+            <a href="/specs/add" class="list-actions-button-edit">Edytuj</a>
+
+    </form>
+    <h2>Mechanicy z daną specjalizacją</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Data uzyskania specjalizacji</th>
+            <th>Poziom zaawansowania</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Krzysztof</td>
+            <td>Nowak</td>
+            <td>2006-12-01</td>
+            <td>Zaawansowany</td>
+        </tr>
+        </tbody>
+    </table>
+    <p><a href="../mechanics/" class="button-back">Powrót</a></p>
+</main>
+<%- include('../../fragments/footer.ejs') %>

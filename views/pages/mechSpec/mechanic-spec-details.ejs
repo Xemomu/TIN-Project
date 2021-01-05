@@ -1,0 +1,31 @@
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Szczegóły</h2>
+    <form class="form-mechanic">
+        <label for="mechanic">Mechanik: </label>
+        <select id="mechanic" disabled>
+            <option value="Krzysztof Nowak">Krzysztof Nowak</option>
+        </select>
+        <span id="errorDetMechanic" class="errors-text"></span>
+
+        <label for="birthDate">Data urodzenia: </label>
+        <input type="date" name="birthDate" value="1970-08-20" id="birthDate" disabled/>
+        <span id="errorDetBirthDate" class="errors-text"></span>
+
+        <label for="salary">Pensja: </label>
+        <input type="number" name="salary" value="4500" id="salary" disabled/>
+        <span id="errorDetSalary" class="errors-text"></span>
+
+        <label for="birthDate">Data uzyskania specjalizacji: </label>
+        <input type="date" name="specDate" value="2007-03-01" id="specDate" disabled/>
+        <span id="errorSpecDate" class="errors-text"></span>
+
+        <label for="lvl">Poziom zaawansowania: </label>
+        <select id="lvl" disabled>
+            <option value="zaawansowany">Zaawansowany</option>
+        </select>
+    </form>
+    <p><a href="../mechanics/add" class="list-actions-button-edit">Edytuj</a>
+        <a href="/mech-spec/" class="button-back">Powrót</a></p>
+</main>
+<%- include('../../fragments/footer.ejs') %>

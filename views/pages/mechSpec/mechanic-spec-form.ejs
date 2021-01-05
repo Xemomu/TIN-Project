@@ -1,0 +1,44 @@
+<script type="application/javascript" src="../../js/validationCommon.js"></script>
+<script type="application/javascript" src="../../js/validationMech-SpecForm.js"></script>
+<%- include('../../fragments/header.ejs') %>
+<main>
+    <h2>Nowe mechanik-specjalizacja</h2>
+    <form class="form-mechanic" novalidate onsubmit="return validateForm();">
+
+        <label for="mechanic">Mechanik: <abbr title="required" aria-label="required">*</abbr></label>
+        <select id="mechanic" >
+            <option value="">Wybierz mechanika</option>
+            <option value="Krzysztof Nowak">Krzysztof Nowak</option>
+            <option value="Andrzej Maślanka">Andrzej Maślanka</option>
+        </select>
+        <span id="errorMechanic" class="errors-text"></span>
+
+        <label for="spec">Specjalizacja: <abbr title="required" aria-label="required">*</abbr></label>
+        <select id="spec" >
+            <option value="">Wybierz specjalizację</option>
+            <option value="Specjalista do samochodów hybrydowych">Specjalista do samochodów hybrydowych</option>
+            <option value="Specjalista do samochodów marki Ford">Specjalista do samochodów marki Ford</option>
+        </select>
+        <span id="errorSpec" class="errors-text"></span>
+
+        <label for="dateFrom">Data uzyskania specjalizacji: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="dateFrom" id="dateFrom">
+        <span id="errorDateFrom" class="errors-text"></span>
+
+        <label for="lvl">Poziom zaawansowania: <abbr title="required" aria-label="required">*</abbr></label>
+        <select id="lvl" >
+        <option value="">Wybierz poziom</option>
+        <option value="średnio-zaawansowany">Średnio-zaawansowany</option>
+        <option value="zaawansowany">Zaawansowany</option>
+        <option value="ekspert">Ekspert</option>
+        </select>
+        <span id="errorLvl" class="errors-text"></span>
+
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <input type="submit" class="form-button-submit" value="Dodaj" />
+            <a href="/mechSpec/" class="form-button-cancel" >Anuluj</a>
+        </div>
+    </form>
+</main>
+<%- include('../../fragments/footer.ejs') %>
