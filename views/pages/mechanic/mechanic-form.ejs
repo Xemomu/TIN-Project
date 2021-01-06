@@ -42,11 +42,10 @@
               <% } %>
           </div>
       </form>
-<!---->
-<!---->
+
           <% if (formMode === 'showDetails' || formMode == 'edit') { %>
               <h2>
-                  Specjalizacje pracownika
+                  Specjalizacje mechanika
               </h2>
               <table class="table-list">
                   <thead>
@@ -57,10 +56,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let m of mech.mechSpecs) { %>
+                  <% for (let m of mech.mechspecs) { %>
                       <tr>
                           <td><a href="/specs/details/<%= m.spec._id %>"><%= m.spec.name %></a></td>
-                          <td><%= m.date.toISOString().split('T')[0] %></td>
+                          <td><%= m.spec.date.toISOString().split('T')[0] %></td>
                           <td><%= m.specLvl %></td>
                       </tr>
                   <% } %>

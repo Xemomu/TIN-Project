@@ -1,43 +1,55 @@
-<script type="application/javascript" src="../../js/validationCommon.js"></script>
-<script type="application/javascript" src="../../js/validationMech-SpecForm.js"></script>
 <%- include('../../fragments/header.ejs') %>
 <main>
-    <h2>Nowe mechanik-specjalizacja</h2>
-    <form class="form-mechanic" novalidate onsubmit="return validateForm();">
+    <script type="application/javascript" src="/js/validationMech-SpecForm.js"></script>
+    <h2><%= pageTitle %></h2>
+    <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+
+    <input type="hidden" name="_id" value="<%= mechspec._id %>">
 
         <label for="mechanic">Mechanik: <abbr title="required" aria-label="required">*</abbr></label>
-        <select id="mechanic" >
-            <option value="">Wybierz mechanika</option>
-            <option value="Krzysztof Nowak">Krzysztof Nowak</option>
-            <option value="Andrzej Maślanka">Andrzej Maślanka</option>
+        <select id="mechanic" name="mechId" required <%= (formMode == 'showDetails') ? 'disabled' : ''%> >
+            <option value="" selected disabled>--- Wybierz mechanika ---</option>
+            <% for (let i = 0; i < allMechs.length; i++) { let mech = allMechs[i]; %>
+            <option value="<%= mech._id %>" label="<%= mech.firstName + ' ' + mech.lastName %>"
+                    <%= (mechspec._id && mech._id.toString() == mechspec.mech._id.toString()) ? 'selected' : ''%>></option>
+            <% } %>
         </select>
         <span id="errorMechanic" class="errors-text"></span>
 
         <label for="spec">Specjalizacja: <abbr title="required" aria-label="required">*</abbr></label>
-        <select id="spec" >
-            <option value="">Wybierz specjalizację</option>
-            <option value="Specjalista do samochodów hybrydowych">Specjalista do samochodów hybrydowych</option>
-            <option value="Specjalista do samochodów marki Ford">Specjalista do samochodów marki Ford</option>
+        <select id="spec" name="specId" required <%= (formMode == 'showDetails') ? 'disabled' : ''%> >
+            <option value="" selected disabled>--- Wybierz specjalizację ---</option>
+            <% for (let i=0; i<allSpecs.length; i++) { let spec = allSpecs[i]; %>
+            <option value="<%= spec._id %>" label="<%= spec.name %>"
+                    <%= (mechspec._id && spec._id.toString() == mechspec.spec._id.toString()) ? 'selected' : ''%>></option>
+            <% } %>
         </select>
         <span id="errorSpec" class="errors-text"></span>
 
-        <label for="dateFrom">Data uzyskania specjalizacji: <abbr title="required" aria-label="required">*</abbr></label>
-        <input type="date" name="dateFrom" id="dateFrom">
+        <label for="date">Data uzyskania specjalizacji: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="date" id="date" value="<%= mechspec.date %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorDateFrom" class="errors-text"></span>
 
-        <label for="lvl">Poziom zaawansowania: <abbr title="required" aria-label="required">*</abbr></label>
-        <select id="lvl" >
-        <option value="">Wybierz poziom</option>
-        <option value="średnio-zaawansowany">Średnio-zaawansowany</option>
-        <option value="zaawansowany">Zaawansowany</option>
-        <option value="ekspert">Ekspert</option>
-        </select>
+        <label for="specLvl">Poziom zaawansowania: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="number" name="specLvl" id="specLvl" value="<%= mechspec.specLvl %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorLvl" class="errors-text"></span>
 
+        <% if (formMode == 'showDetails') { %>
+            <div class="section-buttons">
+                <a href="/mechSpec/edit/<%= mechspec._id %>" class="button-edit">Edytuj</a>
+            </div>
+        <% } %>
+
         <div class="form-buttons">
-            <p id="errorSummary" class="errors-text"></p>
-            <input type="submit" class="form-button-submit" value="Dodaj" />
-            <a href="/mechSpec/" class="form-button-cancel" >Anuluj</a>
+            <p id="errorsSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+            <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+            <a class="form-button-cancel" href="/mechSpec">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/mechSpec">Powrót</a>
+            <% } %>
         </div>
     </form>
 </main>

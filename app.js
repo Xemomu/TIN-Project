@@ -31,7 +31,7 @@ app.use('/mechSpec', mechSpecRouter);
 
 app.use('/api/mechanics', mechApiRouter);
 app.use('/api/specs', specApiRouter);
-app.use('/api/mechspecs', mechSpecApiRouter);
+app.use('/api/mechSpecs', mechSpecApiRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

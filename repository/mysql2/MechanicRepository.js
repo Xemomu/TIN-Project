@@ -31,7 +31,7 @@ exports.getMechanicById = (mechId) => {
                 lastName: firstRow.lastName,
                 birthDate: firstRow.birthDate,
                 salary: firstRow.salary,
-                mechSpecs: []
+                mechspecs: []
             }
             for( let i=0; i<results[0].length; i++ ) {
                 const row = results[0][i];

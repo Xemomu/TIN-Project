@@ -15,7 +15,7 @@
           <tr>
             <td><%= mech.firstName %></td>
             <td><%= mech.lastName %></td>
-            <td><%= mech.birthDate %></td>
+            <td><%= mech.birthDate.toISOString().split('T')[0] %></td>
             <td>
               <ul class="list-actions">
                 <li><a href="/mechanics/details/<%=mech._id%>" class="list-actions-button-details">Szczegóły</a></li>

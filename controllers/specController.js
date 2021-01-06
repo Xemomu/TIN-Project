@@ -4,7 +4,7 @@ const SpecRepository = require('../repository/mysql2/SpecRepository');
 exports.showSpecList = (req, res, next) => {
     SpecRepository.getSpecs()
         .then(specs => {
-            res.render('../views/pages/spec/spec-list', {
+            res.render('pages/spec/spec-list', {
                 specs: specs,
                 navLocation: 'spec'
             });
@@ -12,7 +12,7 @@ exports.showSpecList = (req, res, next) => {
 }
 
 exports.showAddSpecForm = (req, res, next) => {
-    res.render('../views/pages/spec/spec-form', {
+    res.render('pages/spec/spec-form', {
         spec: {},
         pageTitle: 'Nowa specjalizacja',
         formMode: 'createNew',
@@ -26,7 +26,7 @@ exports.showEditSpecForm = (req, res, next) => {
     const specId = req.params.specId;
     SpecRepository.getSpecById(specId)
         .then(spec => {
-            res.render('../views/pages/spec/spec-form', {
+            res.render('pages/spec/spec-form', {
                 spec: spec,
                 formMode: 'edit',
                 pageTitle: 'Edycja specjalizacji',
@@ -41,9 +41,9 @@ exports.showEditSpecForm = (req, res, next) => {
 exports.showSpecDetails = (req, res, next) => {
     const specId = req.params.specId;
     SpecRepository.getSpecById(specId)
-        .then(mech => {
-            res.render('../views/pages/spec/spec-form', {
-                mech: mech,
+        .then(spec => {
+            res.render('pages/spec/spec-form', {
+                spec: spec,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły specjalizacji',
                 formAction: '',
@@ -70,7 +70,7 @@ exports.updateSpec = (req, res, next) => {
 };
 
 exports.deleteSpec = (req, res, next) => {
-    const specId = req.params.mechId;
+    const specId = req.params.specId;
     SpecRepository.deleteSpec(specId)
         .then( (result) => {
             res.redirect('/specs');

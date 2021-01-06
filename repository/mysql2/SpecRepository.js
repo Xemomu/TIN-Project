@@ -30,7 +30,7 @@ exports.getSpecById = (specId) => {
                 _id: firstRow.spec_id,
                 name: firstRow.name,
                 university: firstRow.university,
-                mechSpecs: []
+                mechspecs: []
             }
             for( let i=0; i<results[0].length; i++ ) {
                 const row = results[0][i];
