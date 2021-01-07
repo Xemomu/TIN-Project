@@ -1,4 +1,5 @@
 const db = require('../../config/mysql2/db');
+const mechSchema = require("../../model/joi/Mechanic");
 
 exports.getMechanics = () => {
     return db.promise().query('SELECT * FROM Mechanic')
@@ -58,6 +59,11 @@ exports.getMechanicById = (mechId) => {
 };
 
 exports.createMechanic = (newMechData) => {
+    const vRes = mechSchema.validate(newMechData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const firstName = newMechData.firstName;
     const lastName = newMechData.lastName;
     const birthDate = newMechData.birthDate;
@@ -67,6 +73,11 @@ exports.createMechanic = (newMechData) => {
 };
 
 exports.updateMechanic = (mechId, mechData) => {
+    const vRes = mechSchema.validate(mechData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const firstName = mechData.firstName;
     const lastName = mechData.lastName;
     const birthDate = mechData.birthDate;

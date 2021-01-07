@@ -2,19 +2,30 @@
 <%- include('../../fragments/header.ejs') %>
     <main>
       <h2><%= pageTitle %></h2>
-      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate>
 
           <input type="hidden" name="_id" value="<%= spec._id %>">
 
           <label for="name">Nazwa: <abbr title="required" aria-label="required">*</abbr></label>
           <input type="text" name="name" id="name" placeholder="2-80 znaków" value="<%= spec.name %>"
-                  <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-          <span id="errorName" class="errors-text"></span>
+                  <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+                 class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>"/>
+
+          <span id="errorName" class="errors-text">
+                  <% if (validationErrors.find(e => e.path.includes('name'))) { %>
+                      <%= validationErrors.find(e => e.path.includes('name')).message %>
+                  <% } %>
+          </span>
 
           <label for="university">Gdzie uzyskano: <abbr title="required" aria-label="required">*</abbr></label>
           <input type="text" name="university" id="university" placeholder="2-80 znaków" value="<%= spec.university %>"
-                  <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-          <span id="errorWhere" class="errors-text"></span>
+                  <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+                 class="<%= validationErrors.find(e => e.path.includes('university')) ? 'error-input' : '' %>"/>
+          <span id="errorWhere" class="errors-text">
+              <% if (validationErrors.find(e => e.path.includes('university'))) {%>
+                  <%= validationErrors.find(e => e.path.includes('university')).message %>
+              <% } %>
+          </span>
 
           <% if (formMode === 'showDetails') { %>
               <div class="section-buttons">
@@ -25,8 +36,8 @@
           <div class="form-buttons">
               <p id="errorSummary" class="errors-text"></p>
               <% if (formMode !== 'showDetails') { %>
-              <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
-              <a class="form-button-cancel" href="/specs">Anuluj</a>
+                <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                <a class="form-button-cancel" href="/specs">Anuluj</a>
               <% } else { %>
                   <a class="form-button-cancel" href="/specs">Powrót</a>
               <% } %>

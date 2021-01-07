@@ -13,10 +13,10 @@ const errMessages = (errors) => {
                 err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
                 break;
             case "number.min":
-                err.message = `Wartość powinna wynosić co najmniej ${err.local.limit} zł`;
+                err.message = `Wybierz spośród podanych poziomów ${err.local.limit}`;
                 break;
             case "number.max":
-                err.message = `Wartość powinna wynosić co najwyżej ${err.local.limit} zł`;
+                err.message = `Wybierz spośród podanych poziomów ${err.local.limit}`;
                 break;
             case "date.max":
                 err.message = `Data nie może być z przyszłości`;
@@ -25,6 +25,9 @@ const errMessages = (errors) => {
                 err.message = `Pole jest wymagane`;
                 break;
             case "number.base":
+                err.message = `Pole jest wymagane`;
+                break;
+            case "string.base":
                 err.message = `Pole jest wymagane`;
                 break;
             default:
@@ -41,28 +44,22 @@ const mechSchema = Joi.object({
         .optional()
         .allow("")
         .error(errMessages),
-    firstName: Joi.string()
-        .min(2)
-        .max(60)
+    mechanic: Joi.string()
         .required()
         .error(errMessages),
-    lastName: Joi.string()
-        .min(2)
-        .max(60)
+    spec: Joi.string()
         .required()
         .error(errMessages),
-    birthDate: Joi.date()
+    date: Joi.date()
         .required()
         .max(now)
         .error(errMessages),
-    salary: Joi.number()
-        .min(2000)
-        .max(1000000)
+    specLvl: Joi.number()
+        .min(1)
+        .max(3)
         .required()
         .error(errMessages),
 });
-
-
 
 
 module.exports = mechSchema;

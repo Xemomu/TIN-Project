@@ -12,17 +12,20 @@ exports.showMechanicList = (req, res, next) => {
 }
 
 exports.showAddMechanicForm = (req, res, next) => {
+    const validationErrors = []
     res.render('pages/mechanic/mechanic-form', {
         mech: {},
         pageTitle: 'Nowy mechanik',
         formMode: 'createNew',
         btnLabel: 'Dodaj mechanika',
         formAction: '/mechanics/add',
-        navLocation: 'mechanic'
+        navLocation: 'mechanic',
+        validationErrors: validationErrors
     });
 }
 
 exports.showEditMechanicForm = (req, res, next) => {
+    const validationErrors = []
     const mechId = req.params.mechId;
     MechanicRepository.getMechanicById(mechId)
         .then(mech => {
@@ -32,13 +35,15 @@ exports.showEditMechanicForm = (req, res, next) => {
                 pageTitle: 'Edycja mechanika',
                 btnLabel: 'Edytuj mechanika',
                 formAction: '/mechanics/edit',
-                navLocation: 'mechanic'
+                navLocation: 'mechanic',
+                validationErrors: validationErrors
             });
         });
 };
 
 
 exports.showMechanicDetails = (req, res, next) => {
+    const validationErrors = []
     const mechId = req.params.mechId;
     MechanicRepository.getMechanicById(mechId)
         .then(mech => {
@@ -47,26 +52,52 @@ exports.showMechanicDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły mechanika',
                 formAction: '',
-                navLocation: 'mechanic'
+                navLocation: 'mechanic',
+                validationErrors: validationErrors
             });
         });
-}
+        }
 
 exports.addMechanic = (req, res, next) => {
     const mechData = { ...req.body };
+
     MechanicRepository.createMechanic(mechData)
         .then( result => {
             res.redirect('/mechanics');
+        }).catch(err => {
+        console.log(err.details);
+        res.render('pages/mechanic/mechanic-form', {
+            mech: mechData,
+            pageTitle: 'Dodawanie mechanika',
+            formMode: 'createNew',
+            btnLabel: 'Dodaj mechanika',
+            formAction: '/mechanics/add',
+            navLocation: 'mechanic',
+            validationErrors: err.details
         });
+    });
 };
 
 exports.updateMechanic = (req, res, next) => {
     const mechId = req.body._id;
     const mechData = { ...req.body };
+
     MechanicRepository.updateMechanic(mechId, mechData)
         .then( result => {
             res.redirect('/mechanics');
-        });
+        })
+        .catch(err => {
+            console.log(err.details);
+            res.render('pages/mechanic/mechanic-form', {
+                mech: mechData,
+                formMode: 'edit',
+                pageTitle: 'Edycja mechanika',
+                btnLabel: 'Edytuj mechanika',
+                formAction: '/mechanics/edit',
+                navLocation: 'mechanic',
+                validationErrors: err.details
+            });
+    });
 };
 
 exports.deleteMechanic = (req, res, next) => {
@@ -76,4 +107,3 @@ exports.deleteMechanic = (req, res, next) => {
             res.redirect('/mechanics');
         });
 };
-

@@ -1,4 +1,6 @@
 const db = require('../../config/mysql2/db');
+const specSchema = require('../../model/joi/Spec');
+
 
 exports.getSpecs = () => {
     return db.promise().query('SELECT * FROM Spec')
@@ -58,6 +60,11 @@ exports.getSpecById = (specId) => {
 };
 
 exports.createSpec = (newSpecData) => {
+    const vRes = specSchema.validate(newSpecData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const name = newSpecData.name;
     const university = newSpecData.university;
     const sql = 'INSERT into Spec (name, university) VALUES (?, ?)'

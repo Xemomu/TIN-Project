@@ -1,9 +1,10 @@
 const db = require('../../config/mysql2/db');
+const mechSpecSchema = require("../../model/joi/MechSpec");
 
 exports.getMechSpecs = () => {
     const query = `SELECT mechspec._id as mechspec_id, mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name,
             spec.university, m._id as mech_id, m.firstName, m.lastName, m.birthDate, m.salary
-        FROM MechSpec mechspec 
+        FROM MechSpec mechspec
         left join Mechanic m on mechspec.mech_id = m._id
         left join Spec spec on mechspec.spec_id = spec._id`
     return db.promise().query(query)
@@ -37,7 +38,6 @@ exports.getMechSpecs = () => {
             console.log(err);
         });
 };
-
 
 exports.getMechSpecById = (mechSpecId) => {
     const query = `SELECT mechspec._id as mechspec_id, mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name,
@@ -78,16 +78,26 @@ exports.getMechSpecById = (mechSpecId) => {
         });
 };
 
-exports.createMechSpec = (data) => {
+exports.createMechSpec = (newMechSpecData) => {
+    const vRes = mechSpecSchema.validate(newMechSpecData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     console.log('createMechSpecId');
-    console.log(data);
+    console.log(newMechSpecData);
     const sql = 'INSERT into MechSpec (mech_id, spec_id, date, specLvl) VALUES (?, ?, ?, ?)';
-    return db.promise().execute(sql, [data.mechId, data.specId, data.date, data.specLvl]);
+    return db.promise().execute(sql, [newMechSpecData.mechId, newMechSpecData.specId, newMechSpecData.date, newMechSpecData.specLvl]);
 };
 
-exports.updateMechSpec = (mechSpecId, data) => {
+exports.updateMechSpec = (mechSpecId, mechSpecData) => {
+    const vRes = mechSpecSchema.validate(mechSpecData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const sql = `UPDATE MechSpec set mech_id = ?, spec_id = ?, date = ?, specLvl = ? where _id = ?`;
-    return db.promise().execute(sql, [data.mechId, data.specId, data.date, data.specLvl,  mechSpecId]);
+    return db.promise().execute(sql, [mechSpecData.mechId, mechSpecData.specId, mechSpecData.date, mechSpecData.specLvl,  mechSpecId]);
 };
 
 exports.deleteMechSpec = (mechSpecId) => {
