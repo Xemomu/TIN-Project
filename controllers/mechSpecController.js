@@ -47,8 +47,6 @@ exports.showEditMechSpecForm = (req, res, next) => {
             return MechSpecRepository.getMechSpecById(mechSpecId)
         })
         .then(mechspec => {
-            // let a = allSpecs[0].spec.name.toString();
-            // let b = mechspec.mec
             res.render('pages/mechSpec/mechanic-spec-form', {
                 mechspec: {},
                 formMode: 'edit',

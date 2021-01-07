@@ -1,13 +1,13 @@
 
 function validateForm() {
     const nameInput = document.getElementById('name');
-    const whereInput = document.getElementById('where');
+    const whereInput = document.getElementById('university');
 
     const errorName = document.getElementById('errorName');
     const errorWhere = document.getElementById('errorWhere');
     const errorSummary = document.getElementById('errorSummary');
 
-    resetErrors([nameInput, whereInput], [errorName, errorWhere], errorSummary);
+
 
     let valid = true;
 
@@ -37,3 +37,4 @@ function validateForm() {
 
     return valid;
 }
+resetErrors([nameInput, whereInput], [errorName, errorWhere], errorSummary);

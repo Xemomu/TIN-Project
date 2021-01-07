@@ -11,7 +11,7 @@ function validateForm() {
     const errorSalary = document.getElementById('errorSalary');
     const errorSummary = document.getElementById('errorSummary');
 
-    resetErrors([firstNameInput, lastNameInput, birthDateInput, salaryInput], [errorFirstName, errorLastName, errorBirthDate, errorSalary], errorSummary);
+
 
     let valid = true;
 
@@ -77,3 +77,4 @@ function validateForm() {
 
     return valid;
 }
+resetErrors([firstNameInput, lastNameInput, birthDateInput, salaryInput], [errorFirstName, errorLastName, errorBirthDate, errorSalary], errorSummary);

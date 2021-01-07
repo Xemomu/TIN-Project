@@ -1,9 +1,11 @@
 
 function validateForm() {
+    console.log("validating mechSpec form");
+
     const mechanicInput = document.getElementById('mechanic');
     const specInput = document.getElementById('spec');
-    const dateFromInput = document.getElementById('dateFrom');
-    const lvlInput = document.getElementById('lvl');
+    const dateFromInput = document.getElementById('date');
+    const lvlInput = document.getElementById('specLvl');
 
     const errorMechanic = document.getElementById('errorMechanic');
     const errorSpec = document.getElementById('errorSpec');
@@ -11,7 +13,6 @@ function validateForm() {
     const errorLvl = document.getElementById('errorLvl');
     const errorSummary = document.getElementById('errorSummary');
 
-    resetErrors([mechanicInput, specInput, dateFromInput, lvlInput], [errorMechanic, errorSpec, errorDateFrom, errorLvl], errorSummary);
 
     let valid = true;
 
@@ -66,3 +67,5 @@ function validateForm() {
 
     return valid;
 }
+
+resetErrors([mechanicInput, specInput, dateFromInput, lvlInput], [errorMechanic, errorSpec, errorDateFrom, errorLvl], errorSummary);

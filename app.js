@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 const mechanicRouter = require('./routes/mechanicRoute');
 const specRouter = require('./routes/specRoute');
 const mechSpecRouter = require('./routes/mechSpecRoute');
+
 const mechApiRouter = require('./routes/api/MechanicApiRoute');
 const specApiRouter = require('./routes/api/SpecAPIRoute');
 const mechSpecApiRouter = require('./routes/api/MechSpecApiRoute');
@@ -30,8 +31,14 @@ app.use('/specs', specRouter);
 app.use('/mechSpec', mechSpecRouter);
 
 app.use('/api/mechanics', mechApiRouter);
+app.use('/api/mechanics/:mechId', mechApiRouter);
+
 app.use('/api/specs', specApiRouter);
+app.use('/api/specs/:specId', specApiRouter);
+
 app.use('/api/mechSpecs', mechSpecApiRouter);
+app.use('/api/mechSpecs/:mechSpecId', mechSpecApiRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

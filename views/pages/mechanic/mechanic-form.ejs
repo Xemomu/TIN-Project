@@ -8,33 +8,33 @@
 
           <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
           <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%=mech.firstName %>"
-          <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+          <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
           <span id="errorFirstName" class="errors-text"></span>
 
           <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
           <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mech.lastName %>"
-          <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+          <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
           <span id="errorLastName" class="errors-text"></span>
 
           <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
           <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
-          <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+          <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
           <span id="errorBirthDate" class="errors-text"></span>
 
           <label for="salary">Pensja (zł): <abbr title="required" aria-label="required">*</abbr></label>
           <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mech.salary %>"
-          <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+          <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
           <span id="errorSalary" class="errors-text"></span>
 
-          <% if (formMode == 'showDetails') { %>
+          <% if (formMode === 'showDetails') { %>
               <div class="section-buttons">
                   <a href="/mechanics/edit/<%= mech._id %>" class="button-edit">Edytuj</a>
               </div>
           <% } %>
 
           <div class="form-buttons">
-              <p id="errorsSummary" class="errors-text"></p>
-              <% if (formMode != 'showDetails') { %>
+              <p id="errorSummary" class="errors-text"></p>
+              <% if (formMode !== 'showDetails') { %>
               <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
               <a class="form-button-cancel" href="/mechanics">Anuluj</a>
               <% } else { %>
