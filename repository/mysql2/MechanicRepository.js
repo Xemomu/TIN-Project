@@ -13,6 +13,19 @@ exports.getMechanics = () => {
         });
 };
 
+exports.getMechMechSpec = (_id) => {
+    const query = `SELECT * FROM MechSpec WHERE mech_id = ?`;
+    return db.promise().query(query, [_id])
+        .then( (results, fields) => {
+            console.log(results[0]);
+            return results[0];
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+}
+
 exports.getMechanicById = (mechId) => {
     const query = `SELECT m._id as _id, m.firstName, m.lastName, m.birthDate, m.salary, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name, spec.university 

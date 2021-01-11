@@ -27,10 +27,16 @@ exports.showAddMechanicForm = (req, res, next) => {
 exports.showEditMechanicForm = (req, res, next) => {
     const validationErrors = []
     const mechId = req.params.mechId;
-    MechanicRepository.getMechanicById(mechId)
-        .then(mech => {
+    let mechspecs;
+    MechanicRepository.getMechMechSpec(mechId)
+        .then(mechs => {
+            mechspecs = mechs;
+            return MechanicRepository.getMechanicById(mechId)
+        }).then(mech => {
             res.render('pages/mechanic/mechanic-form', {
                 mech: mech,
+                mechId: mechId,
+                mechspecs: mechspecs,
                 formMode: 'edit',
                 pageTitle: 'Edycja mechanika',
                 btnLabel: 'Edytuj mechanika',

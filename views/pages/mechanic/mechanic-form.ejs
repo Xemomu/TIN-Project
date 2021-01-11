@@ -81,9 +81,9 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let mechsp of  mechspecs) { %>
+                  <% for (let mechsp of mechspecs) { %>
                       <tr>
-                          <td><a href="/specs/details/<%= mechsp.spec._id %>"><%= mechsp.spec.name %></a></td>
+                          <td><a href="/specs/details/<%=mechsp.spec._id%>"><%= mechsp.spec.name %></a></td>
                           <td><%= mechsp.spec.date.toISOString().split('T')[0] %></td>
                           <td><%= mechsp.specLvl %></td>
                       </tr>

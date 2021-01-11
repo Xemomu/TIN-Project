@@ -1,0 +1,23 @@
+Jak uruchomić:
+ 1. Otworzyć terminal w głównym katalogu projektu
+ 2. Wkleić i uruchomić komendę "cd docker && docker-compose up"
+ 3. Otworzyć drugi terminal w głównym katalogu projektu i uruchomić program komendą "npm start"
+ 4. W przeglądarce należy wejść na "http://localhost:3000/"
+
+Konfiguracja bazy danych:
+ 1. Po uruchomieniu aplikacji należy wejść w przeglądarce na "http://localhost:8183/"
+ 2. serwer: mysql
+    user: root
+    passwd: root
+ 3. Wejść w zakładkę "SQL" i osobno wklejać i uruchamiać kążdy kawałek skryptu zaczynający się na "CREATE" z pliku pliku "sqlSchema.txt" z głównego katalogu projektu
+
+Lista technologi:
+- javascript
+- css
+- html
+- Node.js (express)
+- docker
+- mysql2
+- joi
+
+Diagram jest zawarty w głównym katalogu projekt
