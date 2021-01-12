@@ -89,8 +89,11 @@ exports.createMechSpec = (newMechSpecData) => {
     }
     console.log('createMechSpecId');
     console.log(newMechSpecData);
+    console.log('KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK');
+    console.log(newMechSpecData.mech_id);
+    console.log(newMechSpecData.spec_id);
     const sql = 'INSERT into MechSpec (mech_id, spec_id, date, specLvl) VALUES (?, ?, ?, ?)';
-    return db.promise().execute(sql, [newMechSpecData.mechId, newMechSpecData.specId, newMechSpecData.date, newMechSpecData.specLvl]);
+    return db.promise().execute(sql, [newMechSpecData.mech_id, newMechSpecData.spec_id, newMechSpecData.date, newMechSpecData.specLvl]);
 };
 
 exports.updateMechSpec = (mechSpecId, mechSpecData) => {

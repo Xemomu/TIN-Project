@@ -15,7 +15,7 @@ exports.showMechSpecList = (req, res, next) => {
 exports.showAddMechSpecForm = (req, res, next) => {
     let allMechs, allSpecs;
 
-    MechanicRepository.getMechanics()
+    SpecRepository.getSpecs()
         .then(specs => {
             allSpecs = specs;
             return MechanicRepository.getMechanics();
@@ -23,11 +23,12 @@ exports.showAddMechSpecForm = (req, res, next) => {
         .then(mechs => {
             allMechs = mechs;
             res.render('pages/mechSpec/mechanic-spec-form', {
+                mechspec: {},
                 allMechs: allMechs,
                 allSpecs: allSpecs,
                 formMode: 'createNew',
-                pageTitle: 'Nowe Mechanik-Specjalizacja',
-                btnLabel: 'Dodaj Mechanik-Specjalizacja',
+                pageTitle: 'Nowy wpis',
+                btnLabel: 'Dodaj wpis',
                 formAction: '/mechSpec/add',
                 navLocation: 'mechSpec',
                 validationErrors: []
@@ -91,6 +92,7 @@ exports.showMechSpecDetails = (req, res, next) => {
 }
 
 exports.addMechSpec = (req, res, next) => {
+    let allMechs, allSpecs;
     console.log(req.body);
     const mechSpecData = { ...req.body };
     MechSpecRepository.createMechSpec(mechSpecData)
@@ -99,10 +101,17 @@ exports.addMechSpec = (req, res, next) => {
         })
         .catch(err => {
             console.log(err.details);
+            MechanicRepository.getMechanics()
+                .then(mechs => {
+                    allMechs = mechs;
+                    return SpecRepository.getSpecs();
+                })
+                .then(specs => {
+                    allSpecs = specs;
             res.render('pages/mechSpec/mechanic-spec-form', {
-                allMechs: {},
-                allSpecs: {},
-                mechspec: {},
+                mechspec: mechSpecData,
+                allMechs: allMechs,
+                allSpecs: allSpecs,
                 pageTitle: 'Nowy wpis',
                 formMode: 'createNew',
                 btnLabel: 'Dodaj wpis',
@@ -111,6 +120,7 @@ exports.addMechSpec = (req, res, next) => {
                 validationErrors: err.details
             });
         });
+    });
 };
 
 exports.updateMechSpec = (req, res, next) => {
