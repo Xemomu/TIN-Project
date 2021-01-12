@@ -1,6 +1,7 @@
 const db = require('../../config/mysql2/db');
 const mechSpecSchema = require("../../model/joi/MechSpec");
 
+
 exports.getMechSpecs = () => {
     const query = `SELECT mechspec._id as mechspec_id, mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name,
             spec.university, m._id as mech_id, m.firstName, m.lastName, m.birthDate, m.salary
@@ -16,7 +17,6 @@ exports.getMechSpecs = () => {
                     _id: row.mechspec_id,
                     date: row.date,
                     specLvl: row.specLvl,
-                    name: name,
                     spec: {
                         _id: row.spec_id,
                         name: row.name,
@@ -40,17 +40,6 @@ exports.getMechSpecs = () => {
         });
 };
 
-// exports.getMechSpecs = () => {
-//     return db.promise().query('SELECT * FROM MechSpec')
-//         .then( (results, fields) => {
-//             console.log(results[0]);
-//             return results[0];
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             throw err;
-//         });
-// };
 
 exports.getMechSpecById = (mechSpecId) => {
     const query = `SELECT mechspec._id as mechspec_id, mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name,

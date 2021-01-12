@@ -13,9 +13,9 @@ exports.getMechanics = () => {
         });
 };
 
-exports.getMechMechSpec = (_id) => {
+exports.getMechMechSpec = (mechId) => {
     const query = `SELECT * FROM MechSpec WHERE mech_id = ?`;
-    return db.promise().query(query, [_id])
+    return db.promise().query(query, [mechId])
         .then( (results, fields) => {
             console.log(results[0]);
             return results[0];
@@ -30,8 +30,8 @@ exports.getMechanicById = (mechId) => {
     const query = `SELECT m._id as _id, m.firstName, m.lastName, m.birthDate, m.salary, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name, spec.university 
     FROM Mechanic m 
-    left join MechSpec mechspec on mechspec._id = m._id
-    left join Spec spec on mechspec._id = spec._id 
+    left join MechSpec mechspec on mechspec.mech_id = m._id
+    left join Spec spec on mechspec.spec_id = spec._id 
     where m._id = ?`
     return db.promise().query(query, [mechId])
         .then( (results, fields) => {
@@ -39,13 +39,14 @@ exports.getMechanicById = (mechId) => {
             if(!firstRow) {
                 return {};
             }
+            // noinspection UnnecessaryLocalVariableJS
             const mech = {
                 _id: parseInt(mechId),
                 firstName: firstRow.firstName,
                 lastName: firstRow.lastName,
                 birthDate: firstRow.birthDate,
                 salary: firstRow.salary,
-                mechspecs: []
+                mechspecs: [],
             }
             for( let i=0; i<results[0].length; i++ ) {
                 const row = results[0][i];
@@ -57,10 +58,10 @@ exports.getMechanicById = (mechId) => {
                         spec: {
                             _id: row.spec_id,
                             name: row.name,
-                            university: row.university
+                            university: row.university,
                         }
                     };
-                    mech.mechSpecs.push(mechspec);
+                    mech.mechspecs.push(mechspec);
                 }
             }
             return mech;
@@ -81,6 +82,7 @@ exports.createMechanic = (newMechData) => {
     const lastName = newMechData.lastName;
     const birthDate = newMechData.birthDate;
     const salary = newMechData.salary;
+
     const sql = 'INSERT INTO Mechanic (firstName, lastName, birthDate, salary) VALUES (?, ?, ?, ?)'
     return db.promise().execute(sql, [firstName, lastName, birthDate, salary]);
 };
@@ -95,6 +97,7 @@ exports.updateMechanic = (mechId, mechData) => {
     const lastName = mechData.lastName;
     const birthDate = mechData.birthDate;
     const salary = mechData.salary;
+
     const sql = `UPDATE Mechanic set firstName = ?, lastName = ?, birthDate = ?, salary = ? where _id = ?`;
     return db.promise().execute(sql, [firstName, lastName, birthDate, salary, mechId]);
 };

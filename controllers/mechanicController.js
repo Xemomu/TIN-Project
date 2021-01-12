@@ -51,15 +51,10 @@ exports.showEditMechanicForm = (req, res, next) => {
 exports.showMechanicDetails = (req, res, next) => {
     const validationErrors = []
     const mechId = req.params.mechId;
-    let mechspecs;
-    MechanicRepository.getMechMechSpec(mechId)
-        .then(mechs => {
-            mechspecs = mechs;
-            return MechanicRepository.getMechanicById(mechId)
-        }).then(mech =>{
+    MechanicRepository.getMechanicById(mechId)
+        .then(mech => {
             res.render('pages/mechanic/mechanic-form', {
                 mech: mech,
-                mechspecs: mechspecs,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły mechanika',
                 formAction: '',
@@ -98,6 +93,7 @@ exports.updateMechanic = (req, res, next) => {
             res.redirect('/mechanics');
         })
         .catch(err => {
+
             console.log(err.details);
             res.render('pages/mechanic/mechanic-form', {
                 mech: mechData,

@@ -27,11 +27,11 @@
               <% } %>
           </span>
 
-          <% if (formMode === 'showDetails') { %>
-              <div class="section-buttons">
-                  <a href="/specs/edit/<%=spec._id%>" class="button-edit">Edytuj</a>
-              </div>
-          <% } %>
+<!--          <% if (formMode === 'showDetails') { %>-->
+<!--              <div class="section-buttons">-->
+<!--                  <a href="/specs/edit/<%=spec._id%>" class="list-actions-button-edit">Edytuj</a>-->
+<!--              </div>-->
+<!--          <% } %>-->
 
           <div class="form-buttons">
               <p id="errorSummary" class="errors-text"></p>
@@ -39,29 +39,28 @@
                 <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
                 <a class="form-button-cancel" href="/specs">Anuluj</a>
               <% } else { %>
+              <a href="/specs/edit/<%=spec._id%>" class="list-actions-button-edit">Edytuj</a>
                   <a class="form-button-cancel" href="/specs">Powrót</a>
               <% } %>
           </div>
       </form>
 
-          <% if (formMode === 'showDetails' || formMode === 'edit') { %>
+          <% if (formMode === 'showDetails') { %>
               <h2>
                   Mechanicy z daną specjalizacją
               </h2>
               <table class="table-list">
                   <thead>
                   <tr>
-                      <th>Imię</th>
-                      <th>Nazwisko</th>
+                      <th>Imię i nazwisko</th>
                       <th>Data uzyskania specjalizacji</th>
                       <th>Poziom zaawansowania</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let s of mechspecs) { %>
+                  <% for (let s of spec.mechspecs) { %>
                       <tr>
-                          <td><a href="/specs/details/<%= s._id %>"><%= s.firstName %></a></td>
-                          <td><%= s.lastName %></td>
+                          <td><a href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech.lastName %></a></td>
                           <td><%= s.date.toISOString().split('T')[0] %></td>
                           <td><%= s.specLvl %></td>
                       </tr>

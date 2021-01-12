@@ -14,10 +14,7 @@ exports.showMechSpecList = (req, res, next) => {
 
 exports.showAddMechSpecForm = (req, res, next) => {
     let allMechs, allSpecs;
-    const mechspec = {
-        _id: -1,
-        specLvl: 1
-    }
+
     MechanicRepository.getMechanics()
         .then(specs => {
             allSpecs = specs;
@@ -26,7 +23,6 @@ exports.showAddMechSpecForm = (req, res, next) => {
         .then(mechs => {
             allMechs = mechs;
             res.render('pages/mechSpec/mechanic-spec-form', {
-                mechspec: mechspec,
                 allMechs: allMechs,
                 allSpecs: allSpecs,
                 formMode: 'createNew',

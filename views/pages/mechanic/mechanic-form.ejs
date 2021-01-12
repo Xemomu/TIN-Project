@@ -29,7 +29,7 @@
           </span>
 
           <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
-          <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
+          <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate.toISOString().split('T')[0] %>"
           <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                  class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
 
@@ -68,7 +68,7 @@
           </div>
       </form>
 
-          <% if (formMode === 'showDetails' || formMode === 'edit') { %>
+          <% if (formMode === 'showDetails') { %>
               <h2>
                   Specjalizacje mechanika
               </h2>
@@ -81,11 +81,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let mechs of mechspecs) { %>
+                  <% for (let m of mech.mechspecs) { %>
                       <tr>
-                          <td><a href="/specs/details/<%=mechs._id%>"><%= mechs.name %></a></td>
-                          <td><%= mechs.date.toISOString().split('T')[0] %></td>
-                          <td><%= mechs.specLvl %></td>
+                          <td><a href="/specs/details/<%=m.spec._id%>"><%= m.spec.name %></a></td>
+                          <td><%= m.date.toISOString().split('T')[0] %></td>
+                          <td><%= m.specLvl %></td>
                       </tr>
                   <% } %>
                   </tbody>

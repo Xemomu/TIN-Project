@@ -27,17 +27,10 @@ exports.showAddSpecForm = (req, res, next) => {
 exports.showEditSpecForm = (req, res, next) => {
     const validationErrors = []
     const specId = req.params.specId;
-    let mechspecs;
-    SpecRepository.getSpecMechSpec(specId)
-        .then(mechs => {
-            mechspecs: mechs;
-            return SpecRepository.getSpecById(specId)
-        })
+    SpecRepository.getSpecById(specId)
         .then(spec => {
             res.render('pages/spec/spec-form', {
                 spec: spec,
-                specId: specId,
-                mechspecs: mechspecs,
                 formMode: 'edit',
                 pageTitle: 'Edycja specjalizacji',
                 btnLabel: 'Edytuj specjalizację',

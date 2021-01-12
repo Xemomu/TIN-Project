@@ -12,8 +12,8 @@
                 <tbody>
                 <% for (let mechs of mechspecs) { %>
                     <tr>
-                        <td><%= mechs.firstName + ' ' + mechs.lastName%></td>
-                        <td><%= mechs.name %></td>
+                        <td><%= mechs.mechanic.firstName + ' ' + mechs.mechanic.lastName%></td>
+                        <td><%= mechs.spec.name %></td>
                         <td>
                             <ul class="list-actions">
                                 <li><a href="/mechSpec/details/<%=mechs._id%>" class="list-actions-button-details">Szczegóły</a></li>
