@@ -10,15 +10,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                <% for (let mechsp of mechspecs) { %>
+                <% for (let mechs of mechspecs) { %>
                     <tr>
-                        <td><%= mechsp.mechanic.firstName + ' ' + mechsp.mechanic.lastName%></td>
-                        <td><%= mechsp.spec.name %></td>
+                        <td><%= mechs.firstName + ' ' + mechs.lastName%></td>
+                        <td><%= mechs.name %></td>
                         <td>
                             <ul class="list-actions">
-                                <li><a href="/mechSpec/details/<%=mechsp._id%>" class="list-actions-button-details">Szczegóły</a></li>
-                                <li><a href="/mechSpec/edit/<%=mechsp._id%>" class="list-actions-button-edit">Edytuj</a></li>
-                                <li><a href="/mechSpec/delete/<%=mechsp._id%>" class="list-actions-button-delete">Usuń</a></li>
+                                <li><a href="/mechSpec/details/<%=mechs._id%>" class="list-actions-button-details">Szczegóły</a></li>
+                                <li><a href="/mechSpec/edit/<%=mechs._id%>" class="list-actions-button-edit">Edytuj</a></li>
+                                <li><a href="/mechSpec/delete/<%=mechs._id%>" class="list-actions-button-delete">Usuń</a></li>
                             </ul>
                         </td>
                     </tr>

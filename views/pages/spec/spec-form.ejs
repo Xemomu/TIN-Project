@@ -2,7 +2,7 @@
 <%- include('../../fragments/header.ejs') %>
     <main>
       <h2><%= pageTitle %></h2>
-      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate>
+      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
 
           <input type="hidden" name="_id" value="<%= spec._id %>">
 
@@ -29,7 +29,7 @@
 
           <% if (formMode === 'showDetails') { %>
               <div class="section-buttons">
-                  <a href="/specs/edit/<%= spec._id %>" class="button-edit">Edytuj</a>
+                  <a href="/specs/edit/<%=spec._id%>" class="button-edit">Edytuj</a>
               </div>
           <% } %>
 
@@ -51,7 +51,6 @@
               <table class="table-list">
                   <thead>
                   <tr>
-                      <th></th>
                       <th>Imię</th>
                       <th>Nazwisko</th>
                       <th>Data uzyskania specjalizacji</th>
@@ -59,7 +58,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let s of spec.mechspecs) { %>
+                  <% for (let s of mechspecs) { %>
                       <tr>
                           <td><a href="/specs/details/<%= s._id %>"><%= s.firstName %></a></td>
                           <td><%= s.lastName %></td>

@@ -14,6 +14,19 @@ exports.getSpecs = () => {
         });
 };
 
+exports.getSpecMechSpec = (specId) => {
+    const query = `SELECT * FROM MechSpec WHERE spec_id = ?`;
+    return db.promise().query(query, [specId])
+        .then( (results, fields) => {
+            console.log(results[0]);
+            return results[0];
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+}
+
 exports.getSpecById = (specId) => {
     const query = `SELECT spec._id as _id, spec.name, spec.university, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, m._id as mech_id, m.firstName, m.lastName, m.birthDate, m.salary
@@ -29,7 +42,6 @@ exports.getSpecById = (specId) => {
             }
             const spec = {
                 _id: parseInt(specId),
-                _id: firstRow.spec_id,
                 name: firstRow.name,
                 university: firstRow.university,
                 mechspecs: []

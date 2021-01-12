@@ -13,6 +13,7 @@ function validateForm() {
     const errorLvl = document.getElementById('errorLvl');
     const errorSummary = document.getElementById('errorSummary');
 
+    resetErrors([mechanicInput, specInput, dateFromInput, lvlInput], [errorMechanic, errorSpec, errorDateFrom, errorLvl], errorSummary);
 
     let valid = true;
 
@@ -68,4 +69,3 @@ function validateForm() {
     return valid;
 }
 
-resetErrors([mechanicInput, specInput, dateFromInput, lvlInput], [errorMechanic, errorSpec, errorDateFrom, errorLvl], errorSummary);

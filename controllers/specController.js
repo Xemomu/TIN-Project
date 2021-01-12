@@ -27,12 +27,17 @@ exports.showAddSpecForm = (req, res, next) => {
 exports.showEditSpecForm = (req, res, next) => {
     const validationErrors = []
     const specId = req.params.specId;
-    SpecRepository.getSpecById(specId)
+    let mechspecs;
+    SpecRepository.getSpecMechSpec(specId)
+        .then(mechs => {
+            mechspecs: mechs;
+            return SpecRepository.getSpecById(specId)
+        })
         .then(spec => {
             res.render('pages/spec/spec-form', {
                 spec: spec,
                 specId: specId,
-                mechspecs: {},
+                mechspecs: mechspecs,
                 formMode: 'edit',
                 pageTitle: 'Edycja specjalizacji',
                 btnLabel: 'Edytuj specjalizację',
@@ -47,10 +52,16 @@ exports.showEditSpecForm = (req, res, next) => {
 exports.showSpecDetails = (req, res, next) => {
     const validationErrors = []
     const specId = req.params.specId;
-    SpecRepository.getSpecById(specId)
+    let mechspecs;
+    SpecRepository.getSpecMechSpec(specId)
+        .then(mechs => {
+            mechspecs = mechs;
+            return SpecRepository.getSpecById(specId)
+        })
         .then(spec => {
             res.render('pages/spec/spec-form', {
                 spec: spec,
+                mechspecs: mechspecs,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły specjalizacji',
                 formAction: '',
@@ -65,7 +76,8 @@ exports.addSpec = (req, res, next) => {
     SpecRepository.createSpec(specData)
         .then( result => {
             res.redirect('/specs');
-        }).catch(err => {
+        })
+        .catch(err => {
         console.log(err.details);
         res.render('pages/spec/spec-form', {
             spec: specData,
@@ -82,19 +94,29 @@ exports.addSpec = (req, res, next) => {
 exports.updateSpec = (req, res, next) => {
     const specId = req.body._id;
     const specData = { ...req.body };
+    let error;
+    const _id = specId;
+    specData._id = _id;
 
     SpecRepository.updateSpec(specId, specData)
         .then( result => {
             res.redirect('/specs');
-        }).catch(err => {
-        res.render('pages/spec/spec-form', {
+        })
+        .catch(err => {
+            error = err;
+            return SpecRepository.getSpecMechSpec(specId)
+        })
+        .then(mechs => {
+            res.render('pages/spec/spec-form', {
             spec: specData,
-            pageTitle: 'Edycja specjalizacji',
+            specId: _id,
+            mechspecs: mechs,
             formMode: 'edit',
+            pageTitle: 'Edycja specjalizacji',
             btnLabel: 'Edytuj specjalizację',
             formAction: '/specs/add',
             navLocation: 'spec',
-            validationErrors: err.details
+            validationErrors: error.details
         });
     });
 };

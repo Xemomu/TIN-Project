@@ -11,7 +11,7 @@ function validateForm() {
     const errorSalary = document.getElementById('errorSalary');
     const errorSummary = document.getElementById('errorSummary');
 
-
+    resetErrors([firstNameInput, lastNameInput, birthDateInput, salaryInput], [errorFirstName, errorLastName, errorBirthDate, errorSalary], errorSummary);
 
     let valid = true;
 
@@ -68,7 +68,7 @@ function validateForm() {
     } else if (!checkNumberRange(salaryInput.value, 2000, 1000000)) {
         valid = false;
         salaryInput.classList.add("error-input");
-        errorSalary.innerText = "Pole powinno być liczbą w zakresie od 2000 do 1000000";
+        errorSalary.innerText = "Pole powinno być liczbą z zakresu (2000 - 1000000)";
     }
 
     if (!valid) {
@@ -77,4 +77,4 @@ function validateForm() {
 
     return valid;
 }
-resetErrors([firstNameInput, lastNameInput, birthDateInput, salaryInput], [errorFirstName, errorLastName, errorBirthDate, errorSalary], errorSummary);
+

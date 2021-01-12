@@ -2,7 +2,7 @@
     <main>
         <script type="application/javascript" src="/js/validationMechanicForm.js"></script>
       <h2><%= pageTitle %></h2>
-      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate >
+      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
 
           <input type="hidden" name="_id" value="<%= mech._id %>">
 
@@ -81,11 +81,11 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% for (let mechsp of mechspecs) { %>
+                  <% for (let mechs of mechspecs) { %>
                       <tr>
-                          <td><a href="/specs/details/<%=mechsp.spec._id%>"><%= mechsp.spec.name %></a></td>
-                          <td><%= mechsp.spec.date.toISOString().split('T')[0] %></td>
-                          <td><%= mechsp.specLvl %></td>
+                          <td><a href="/specs/details/<%=mechs._id%>"><%= mechs.name %></a></td>
+                          <td><%= mechs.date.toISOString().split('T')[0] %></td>
+                          <td><%= mechs.specLvl %></td>
                       </tr>
                   <% } %>
                   </tbody>
