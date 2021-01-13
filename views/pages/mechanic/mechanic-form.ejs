@@ -50,11 +50,6 @@
               <% } %>
           </span>
 
-          <% if (formMode === 'showDetails') { %>
-              <div class="section-buttons">
-                  <a href="/mechanics/edit/<%= mech._id %>" class="button-edit">Edytuj</a>
-              </div>
-          <% } %>
 
           <div class="form-buttons">
               <p id="errorSummary" class="errors-text"></p>
@@ -62,34 +57,48 @@
               <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
               <a class="form-button-cancel" href="/mechanics">Anuluj</a>
               <% } else { %>
-
-                  <a class="form-button-cancel" href="/mechanics">Powrót</a>
+                  <a class="list-actions-button-edit" href="/mechanics/edit/<%= mech._id %>" >Edytuj</a>
+                  <a class="button-back" href="/mechanics">Powrót</a>
               <% } %>
           </div>
       </form>
 
           <% if (formMode === 'showDetails') { %>
-              <h2>
-                  Specjalizacje mechanika
-              </h2>
-              <table class="table-list">
-                  <thead>
-                  <tr>
-                      <th>Nazwa</th>
-                      <th>Data uzyskania</th>
-                      <th>Poziom zaawansowania</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <% for (let m of mech.mechspecs) { %>
-                      <tr>
-                          <td><a href="/specs/details/<%=m.spec._id%>"><%= m.spec.name %></a></td>
-                          <td><%= m.date.toISOString().split('T')[0] %></td>
-                          <td><%= m.specLvl %></td>
-                      </tr>
-                  <% } %>
-                  </tbody>
-              </table>
-          <% } %>
+            <% for (let m of mech.mechspecs) { %>
+                <% if ((m.spec._id !== null)) { %>
+                    <h2>
+                        Specjalizacje mechanika
+                    </h2>
+                <table class="table-list">
+                    <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Data uzyskania</th>
+                        <th>Poziom zaawansowania</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (let m of mech.mechspecs) { %>
+                    <tr>
+                        <td><a class="href-button" href="/specs/details/<%=m.spec._id%>"><%= m.spec.name %></a></td>
+                        <td><%= m.date.toISOString().split('T')[0] %></td>
+                        <%if(m.specLvl === 1) { %>
+                            <td>Średnio-zaawansowany</td>
+                        <% } else if (m.specLvl === 2){ %>
+                            <td>Zaawansowany</td>
+                        <% } else if (m.specLvl === 3){ %>
+                            <td>Ekspert</td>
+                        <% } %>
+                    </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <h2>
+                        Mechanik nie posiada specjalizacji
+                    </h2>
+                <% } %>
+            <% } %>
+        <% } %>
     </main>
 <%- include('../../fragments/footer.ejs') %>

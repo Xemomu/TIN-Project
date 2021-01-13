@@ -11,7 +11,7 @@
             <option value="" selected disabled>--- Wybierz mechanika ---</option>
             <% for (let i = 0; i < allMechs.length; i++) { let mech = allMechs[i]; %>
             <option value="<%= mech._id %>" label="<%= mech.firstName + ' ' + mech.lastName %>"
-                    <%= (mechspec._id && mech._id.toString() === mechspec.mech._id.toString()) ? 'selected' : ''%>></option>
+                    <%= (mechspec._id && mech._id.toString() === mechspec.mechanic._id.toString()) ? 'selected' : ''%>></option>
             <% } %>
         </select>
         <span id="errorMechanic" class="errors-text"></span>
@@ -40,19 +40,14 @@
         </select>
         <span id="errorLvl" class="errors-text"></span>
 
-        <% if (formMode === 'showDetails') { %>
-            <div class="section-buttons">
-                <a href="/mechSpec/edit/<%= mechspec._id %>" class="list-actions-button-edit">Edytuj</a>
-            </div>
-        <% } %>
-
         <div class="form-buttons">
             <p id="errorSummary" class="errors-text"></p>
             <% if (formMode !== 'showDetails') { %>
             <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
             <a class="form-button-cancel" href="/mechSpec">Anuluj</a>
             <% } else { %>
-                <a class="form-button-cancel" href="/mechSpec">Powrót</a>
+                <a class="list-actions-button-edit" href="/mechSpec/edit/<%= mechspec._id %>" >Edytuj</a>
+                <a class="button-back" href="/mechSpec">Powrót</a>
             <% } %>
         </div>
     </form>

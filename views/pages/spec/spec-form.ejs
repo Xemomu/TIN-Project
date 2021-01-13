@@ -27,24 +27,18 @@
               <% } %>
           </span>
 
-<!--          <% if (formMode === 'showDetails') { %>-->
-<!--              <div class="section-buttons">-->
-<!--                  <a href="/specs/edit/<%=spec._id%>" class="list-actions-button-edit">Edytuj</a>-->
-<!--              </div>-->
-<!--          <% } %>-->
 
           <div class="form-buttons">
               <p id="errorSummary" class="errors-text"></p>
               <% if (formMode !== 'showDetails') { %>
-                <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
-                <a class="form-button-cancel" href="/specs">Anuluj</a>
+                    <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+                    <a class="form-button-cancel" href="/specs">Anuluj</a>
               <% } else { %>
-              <a href="/specs/edit/<%=spec._id%>" class="list-actions-button-edit">Edytuj</a>
-                  <a class="form-button-cancel" href="/specs">Powrót</a>
+                    <a class="list-actions-button-edit" href="/specs/edit/<%=spec._id%>" >Edytuj</a>
+                    <a class="button-back" href="/specs">Powrót</a>
               <% } %>
           </div>
       </form>
-
           <% if (formMode === 'showDetails') { %>
               <h2>
                   Mechanicy z daną specjalizacją
@@ -60,9 +54,15 @@
                   <tbody>
                   <% for (let s of spec.mechspecs) { %>
                       <tr>
-                          <td><a href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech.lastName %></a></td>
+                          <td><a class="href-button" href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech.lastName %></a></td>
                           <td><%= s.date.toISOString().split('T')[0] %></td>
-                          <td><%= s.specLvl %></td>
+                          <%if(s.specLvl === 1) { %>
+                              <td>Średnio-zaawansowany</td>
+                          <% } else if (s.specLvl === 2){ %>
+                              <td>Zaawansowany</td>
+                          <% } else if (s.specLvl === 3){ %>
+                              <td>Ekspert</td>
+                          <% } %>
                       </tr>
                   <% } %>
                   </tbody>

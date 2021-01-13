@@ -99,6 +99,17 @@ main h2 {
     background-color: #404f41;
 }
 
+.href-button {
+    color: whitesmoke;
+    text-decoration: none;
+    text-align: center;
+}
+
+.href-button:hover {
+    border-radius: 8px;
+    background-color: #777777;
+}
+
 .list-actions {
     display: flex;
     justify-content: center;

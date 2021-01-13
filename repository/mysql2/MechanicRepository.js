@@ -111,4 +111,3 @@ exports.deleteMechanic = (mechId) => {
             return db.promise().execute(sql2, [mechId])
         });
 };
-

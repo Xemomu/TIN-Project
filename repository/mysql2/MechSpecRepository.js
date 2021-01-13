@@ -58,7 +58,6 @@ exports.getMechSpecById = (mechSpecId) => {
                 _id: parseInt(mechSpecId),
                 date: firstRow.date,
                 specLvl: firstRow.specLvl,
-                name: name,
                 spec: {
                     _id: firstRow.spec_id,
                     name: firstRow.name,
@@ -89,9 +88,6 @@ exports.createMechSpec = (newMechSpecData) => {
     }
     console.log('createMechSpecId');
     console.log(newMechSpecData);
-    console.log('KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK');
-    console.log(newMechSpecData.mech_id);
-    console.log(newMechSpecData.spec_id);
     const sql = 'INSERT into MechSpec (mech_id, spec_id, date, specLvl) VALUES (?, ?, ?, ?)';
     return db.promise().execute(sql, [newMechSpecData.mech_id, newMechSpecData.spec_id, newMechSpecData.date, newMechSpecData.specLvl]);
 };
@@ -103,7 +99,7 @@ exports.updateMechSpec = (mechSpecId, mechSpecData) => {
         return Promise.reject(vRes.error);
     }
     const sql = `UPDATE MechSpec set mech_id = ?, spec_id = ?, date = ?, specLvl = ? where _id = ?`;
-    return db.promise().execute(sql, [mechSpecData.mechId, mechSpecData.specId, mechSpecData.date, mechSpecData.specLvl,  mechSpecId]);
+    return db.promise().execute(sql, [mechSpecData.mech_id, mechSpecData.spec_id, mechSpecData.date, mechSpecData.specLvl,  mechSpecId]);
 };
 
 exports.deleteMechSpec = (mechSpecId) => {
@@ -115,4 +111,3 @@ exports.deleteManyMechSpecs = (mechSpecIds) => {
     const sql = 'DELETE FROM MechSpec where _id IN (?)'
     return db.promise().execute(sql, [mechSpecIds]);
 };
-
