@@ -1,8 +1,7 @@
-
 function validateForm() {
     console.log("validating mechSpec form");
 
-    const mechanicInput = document.getElementById('mechanic');
+    const mechanicInput = document.getElementById('mechId');
     const specInput = document.getElementById('spec');
     const dateFromInput = document.getElementById('date');
     const lvlInput = document.getElementById('specLvl');
@@ -27,7 +26,6 @@ function validateForm() {
     if (day.length < 2)
         day = '0' + day;
     const nowString = [year, month, day].join('-');
-
 
 
     if (!checkRequired(mechanicInput.value)) {

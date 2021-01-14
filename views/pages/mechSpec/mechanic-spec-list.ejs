@@ -1,30 +1,30 @@
 <%- include('../../fragments/header.ejs') %>
-        <main>
-            <h2>Lista mechaników z ich specjalizacjami</h2>
-            <table class="table-list">
-                <thead>
-                    <tr>
-                        <th>Mechanik</th>
-                        <th>Specjalizacja</th>
-                        <th>Akcje</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% for (let mechs of mechspecs) { %>
-                    <tr>
-                        <td><%= mechs.mechanic.firstName + ' ' + mechs.mechanic.lastName%></td>
-                        <td><%= mechs.spec.name %></td>
-                        <td>
-                            <ul class="list-actions">
-                                <li><a href="/mechSpec/details/<%=mechs._id%>" class="list-actions-button-details">Szczegóły</a></li>
-                                <li><a href="/mechSpec/edit/<%=mechs._id%>" class="list-actions-button-edit">Edytuj</a></li>
-                                <li><a href="/mechSpec/delete/<%=mechs._id%>" class="list-actions-button-delete">Usuń</a></li>
-                            </ul>
-                        </td>
-                    </tr>
-                <% } %>
-                </tbody>
-            </table>
-            <p><a href="/mechSpec/add" class="button-add">Dodaj</a></p>
-        </main>
+<main>
+    <h2>Lista mechaników z ich specjalizacjami</h2>
+    <table class="table-list">
+        <thead>
+        <tr>
+            <th>Mechanik</th>
+            <th>Specjalizacja</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for (let mechs of mechspecs) { %>
+            <tr>
+                <td><%= mechs.mechanic.firstName + ' ' + mechs.mechanic.lastName %></td>
+                <td><%= mechs.spec.name %></td>
+                <td>
+                    <ul class="list-actions">
+                        <li><a href="/mechSpec/details/<%= mechs._id %>" class="list-actions-button-details">Szczegóły</a></li>
+                        <li><a href="/mechSpec/edit/<%= mechs._id %>" class="list-actions-button-edit">Edytuj</a></li>
+                        <li><a href="/mechSpec/delete/<%= mechs._id %>" class="list-actions-button-delete">Usuń</a></li>
+                    </ul>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+    <p><a href="/mechSpec/add" class="button-add">Dodaj</a></p>
+</main>
 <%- include('../../fragments/footer.ejs') %>

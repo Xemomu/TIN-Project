@@ -1,4 +1,3 @@
-
 function validateForm() {
     const nameInput = document.getElementById('name');
     const whereInput = document.getElementById('university');

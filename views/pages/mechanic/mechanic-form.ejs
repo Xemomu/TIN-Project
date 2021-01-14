@@ -1,74 +1,72 @@
 <%- include('../../fragments/header.ejs') %>
-    <main>
-        <script type="application/javascript" src="/js/validationMechanicForm.js"></script>
-      <h2><%= pageTitle %></h2>
-      <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+<main>
+    <script type="application/javascript" src="/js/validationMechanicForm.js"></script>
+    <h2><%= pageTitle %></h2>
+    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
-          <input type="hidden" name="_id" value="<%= mech._id %>">
+        <input type="hidden" name="_id" value="<%= mech._id %>">
 
-          <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
-          <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%=mech.firstName %>"
-          <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-                 class="<%= validationErrors.find(e => e.path.includes('firstName')) ? 'error-input' : '' %>"/>
+        <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%= mech.firstName %>"
+                <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('firstName')) ? 'error-input' : '' %>"/>
 
-          <span id="errorFirstName" class="errors-text">
-              <% if (validationErrors.find(e => e.path.includes('firstName'))) { %>
-                  <%= validationErrors.find(e => e.path.includes('firstName')).message %>
-              <% } %>
-          </span>
+        <span id="errorFirstName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('firstName'))) { %>
+                <%= validationErrors.find(e => e.path.includes('firstName')).message %>
+            <% } %>
+        </span>
 
-          <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
-          <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mech.lastName %>"
-          <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-          class="<%= validationErrors.find(e => e.path.includes('lastName')) ? 'error-input' : '' %>"/>
+        <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mech.lastName %>"
+                <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('lastName')) ? 'error-input' : '' %>"/>
 
-          <span id="errorLastName" class="errors-text">
-              <% if (validationErrors.find(e => e.path.includes('lastName'))) { %>
-                  <%= validationErrors.find(e => e.path.includes('lastName')).message %>
-              <% } %>
-          </span>
+        <span id="errorLastName" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('lastName'))) { %>
+                <%= validationErrors.find(e => e.path.includes('lastName')).message %>
+            <% } %>
+        </span>
 
-          <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
-          <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
-          <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-                 class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
+        <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
+                <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
 
-          <span id="errorBirthDate" class="errors-text">
-              <% if (validationErrors.find(e => e.path.includes('birthDate'))) { %>
-                  <%= validationErrors.find(e => e.path.includes('birthDate')).message %>
-              <% } %>
-          </span>
+        <span id="errorBirthDate" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('birthDate'))) { %>
+                <%= validationErrors.find(e => e.path.includes('birthDate')).message %>
+            <% } %>
+        </span>
 
-          <label for="salary">Pensja (zł): <abbr title="required" aria-label="required">*</abbr></label>
-          <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mech.salary %>"
-          <%= (formMode === 'showDetails') ? 'disabled' : '' %>
-                 class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>"/>
+        <label for="salary">Pensja (zł): <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mech.salary %>"
+                <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>"/>
 
-          <span id="errorSalary" class="errors-text">
-              <% if (validationErrors.find(e => e.path.includes('salary'))) { %>
-                  <%= validationErrors.find(e => e.path.includes('salary')).message %>
-              <% } %>
-          </span>
+        <span id="errorSalary" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('salary'))) { %>
+                <%= validationErrors.find(e => e.path.includes('salary')).message %>
+            <% } %>
+        </span>
 
 
-          <div class="form-buttons">
-              <p id="errorSummary" class="errors-text"></p>
-              <% if (formMode !== 'showDetails') { %>
-              <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
-              <a class="form-button-cancel" href="/mechanics">Anuluj</a>
-              <% } else { %>
-                  <a class="list-actions-button-edit" href="/mechanics/edit/<%= mech._id %>" >Edytuj</a>
-                  <a class="button-back" href="/mechanics">Powrót</a>
-              <% } %>
-          </div>
-      </form>
+        <div class="form-buttons">
+            <p id="errorSummary" class="errors-text"></p>
+            <% if (formMode !== 'showDetails') { %>
+            <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+            <a class="form-button-cancel" href="/mechanics">Anuluj</a>
+            <% } else { %>
+                <a class="list-actions-button-edit" href="/mechanics/edit/<%= mech._id %>">Edytuj</a>
+                <a class="button-back" href="/mechanics">Powrót</a>
+            <% } %>
+        </div>
+    </form>
 
-          <% if (formMode === 'showDetails') { %>
-            <% for (let m of mech.mechspecs) { %>
-                <% if ((m.spec._id !== null)) { %>
-                    <h2>
-                        Specjalizacje mechanika
-                    </h2>
+    <% if (formMode === 'showDetails') { %>
+                <h2>
+                    Specjalizacje mechanika
+                </h2>
                 <table class="table-list">
                     <thead>
                     <tr>
@@ -80,9 +78,9 @@
                     <tbody>
                     <% for (let m of mech.mechspecs) { %>
                     <tr>
-                        <td><a class="href-button" href="/specs/details/<%=m.spec._id%>"><%= m.spec.name %></a></td>
+                        <td><a class="href-button" href="/specs/details/<%= m.spec._id %>"><%= m.spec.name %></a></td>
                         <td><%= m.date.toISOString().split('T')[0] %></td>
-                        <%if(m.specLvl === 1) { %>
+                        <% if(m.specLvl === 1) { %>
                             <td>Średnio-zaawansowany</td>
                         <% } else if (m.specLvl === 2){ %>
                             <td>Zaawansowany</td>
@@ -93,12 +91,6 @@
                     <% } %>
                     </tbody>
                 </table>
-                <% } else { %>
-                    <h2>
-                        Mechanik nie posiada specjalizacji
-                    </h2>
-                <% } %>
-            <% } %>
-        <% } %>
-    </main>
+    <% } %>
+</main>
 <%- include('../../fragments/footer.ejs') %>

@@ -44,10 +44,10 @@ const mechSchema = Joi.object({
         .optional()
         .allow("")
         .error(errMessages),
-    mechanic: Joi.string()
+    mechId: Joi.string()
         .required()
         .error(errMessages),
-    spec: Joi.string()
+    specId: Joi.string()
         .required()
         .error(errMessages),
     date: Joi.date()

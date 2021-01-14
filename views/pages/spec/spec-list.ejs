@@ -1,30 +1,30 @@
 <%- include('../../fragments/header.ejs') %>
-    <main>
-      <h2>Lista specjalizacji</h2>
-      <table class="table-list">
+<main>
+    <h2>Lista specjalizacji</h2>
+    <table class="table-list">
         <thead>
-          <tr>
+        <tr>
             <th>Nazwa</th>
             <th>Gdzie Uzyskano</th>
             <th>Akcje</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
         <% for (let spec of specs) { %>
-          <tr>
-            <td><%= spec.name %></td>
-            <td><%= spec.university %></td>
-            <td>
-              <ul class="list-actions">
-                <li><a href="/specs/details/<%=spec._id%>" class="list-actions-button-details">Szczegóły</a></li>
-                <li><a href="/specs/edit/<%=spec._id%>" class="list-actions-button-edit">Edytuj</a></li>
-                <li><a href="/specs/delete/<%=spec._id%>" class="list-actions-button-delete">Usuń</a></li>
-              </ul>
-            </td>
-          </tr>
+            <tr>
+                <td><%= spec.name %></td>
+                <td><%= spec.university %></td>
+                <td>
+                    <ul class="list-actions">
+                        <li><a href="/specs/details/<%= spec._id %>" class="list-actions-button-details">Szczegóły</a></li>
+                        <li><a href="/specs/edit/<%= spec._id %>" class="list-actions-button-edit">Edytuj</a></li>
+                        <li><a href="/specs/delete/<%= spec._id %>" class="list-actions-button-delete">Usuń</a></li>
+                    </ul>
+                </td>
+            </tr>
         <% } %>
         </tbody>
-      </table>
-      <p><a href="/specs/add" class="button-add">Dodaj nową specjalizację</a></p>
-    </main>
+    </table>
+    <p><a href="/specs/add" class="button-add">Dodaj nową specjalizację</a></p>
+</main>
 <%- include('../../fragments/footer.ejs') %>

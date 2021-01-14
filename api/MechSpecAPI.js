@@ -14,9 +14,9 @@ exports.getMechSpecById = (req, res, next) => {
     const mechSpecId = req.params.mechSpecId;
     MechSpecRepository.getMechSpecById(mechSpecId)
         .then(mech => {
-            if(!mech) {
+            if (!mech) {
                 res.status(404).json({
-                    message: 'MechSpec with id: '+mechSpecId+' not found'
+                    message: 'MechSpec with id: ' + mechSpecId + ' not found'
                 })
             } else {
                 res.status(200).json(mech);

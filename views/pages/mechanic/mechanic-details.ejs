@@ -1,43 +1,43 @@
 <%- include('../../fragments/header.ejs') %>
-    <main>
-      <h2>Szczegóły pracownika</h2>
-      <form class="form-mechanic">
+<main>
+    <h2>Szczegóły pracownika</h2>
+    <form class="form-mechanic">
 
-                <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
-                <input type="text" name="firstName" value="Krzysztof" id="firstName" disabled/>
-                <span id="errorDetFirstName" class="errors-text"></span>
+        <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="firstName" value="Krzysztof" id="firstName" disabled/>
+        <span id="errorDetFirstName" class="errors-text"></span>
 
-                <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
-                <input type="text" name="lastName" value="Nowak" id="lastName" disabled/>
-                <span id="errorDetLastName" class="errors-text"></span>
+        <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="lastName" value="Nowak" id="lastName" disabled/>
+        <span id="errorDetLastName" class="errors-text"></span>
 
-                <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
-                <input type="text" name="birthDate" value="1970.08.20r." id="birthDate" disabled/>
-                <span id="errorDetBD" class="errors-text"></span>
+        <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="birthDate" value="1970.08.20r." id="birthDate" disabled/>
+        <span id="errorDetBD" class="errors-text"></span>
 
-                <label for="salary">Pensja: <abbr title="required" aria-label="required">*</abbr></label>
-                <input type="text" name="salary" value="4500zł" id="salary" disabled/>
-                <span id="errorDetS" class="errors-text"></span>
+        <label for="salary">Pensja: <abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="salary" value="4500zł" id="salary" disabled/>
+        <span id="errorDetS" class="errors-text"></span>
 
-                <a href="/mechanics/add" class="list-actions-button-edit">Edytuj</a>
-        </form>
+        <a href="/mechanics/add" class="list-actions-button-edit">Edytuj</a>
+    </form>
     <h2>Specjalizacje pracownika</h2>
     <table class="table-list">
         <thead>
-          <tr>
+        <tr>
             <th>Nazwa</th>
             <th>Data uzyskania</th>
             <th>Poziom zaawansowania</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
-          <tr>
+        <tr>
             <td>Specjalista do samochodów marki Ford</td>
             <td>2006-12-01</td>
             <td>Zaawansowany</td>
-          </tr>
+        </tr>
         </tbody>
-      </table>
-      <p><a href="/mechanics/" class="button-back">Powrót</a></p>
-    </main>
+    </table>
+    <p><a href="/mechanics/" class="button-back">Powrót</a></p>
+</main>
 <%- include('../../fragments/footer.ejs') %>

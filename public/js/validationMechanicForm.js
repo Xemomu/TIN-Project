@@ -1,4 +1,3 @@
-
 function validateForm() {
     const firstNameInput = document.getElementById('firstName');
     const lastNameInput = document.getElementById('lastName');
@@ -37,6 +36,7 @@ function validateForm() {
         errorFirstName.innerText = "Pole powinno zawierać od 2 do 60 znaków";
     }
 
+
     if (!checkRequired(lastNameInput.value)) {
         valid = false;
         lastNameInput.classList.add("error-input");
@@ -46,6 +46,7 @@ function validateForm() {
         lastNameInput.classList.add("error-input");
         errorLastName.innerText = "Pole powinno zawierać od 2 do 60 znaków";
     }
+
 
     if (!checkRequired(birthDateInput.value)) {
         valid = false;
@@ -57,19 +58,23 @@ function validateForm() {
         errorBirthDate.innerText = "Data nie może być z przyszłości";
     }
 
-    if (!checkRequired(salaryInput.value)) {
+
+    if (salaryInput.value !== ' ') {
+        if (!checkNumber(salaryInput.value)) {
+            valid = false;
+            salaryInput.classList.add("error-input");
+            errorSalary.innerText = "Pole powinno być liczbą";
+        }
+    } else if (!checkRequired(salaryInput.value)) {
         valid = false;
         salaryInput.classList.add("error-input");
         errorSalary.innerText = "Pole jest wymagane";
-    } else if (!checkNumber(salaryInput.value)) {
-        valid = false;
-        salaryInput.classList.add("error-input");
-        errorSalary.innerText = "Pole powinno być liczbą";
     } else if (!checkNumberRange(salaryInput.value, 2000, 1000000)) {
         valid = false;
         salaryInput.classList.add("error-input");
         errorSalary.innerText = "Pole powinno być liczbą z zakresu (2000 - 1000000)";
     }
+
 
     if (!valid) {
         errorSummary.innerText = "Formularz zawiera błędy";

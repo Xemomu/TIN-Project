@@ -63,6 +63,4 @@ const mechSchema = Joi.object({
 });
 
 
-
-
 module.exports = mechSchema;

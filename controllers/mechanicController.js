@@ -33,18 +33,18 @@ exports.showEditMechanicForm = (req, res, next) => {
             mechspecs = mechs;
             return MechanicRepository.getMechanicById(mechId)
         }).then(mech => {
-            res.render('pages/mechanic/mechanic-form', {
-                mech: mech,
-                mechId: mechId,
-                mechspecs: mechspecs,
-                formMode: 'edit',
-                pageTitle: 'Edycja mechanika',
-                btnLabel: 'Edytuj mechanika',
-                formAction: '/mechanics/edit',
-                navLocation: 'mechanic',
-                validationErrors: validationErrors
-            });
+        res.render('pages/mechanic/mechanic-form', {
+            mech: mech,
+            mechId: mechId,
+            mechspecs: mechspecs,
+            formMode: 'edit',
+            pageTitle: 'Edycja mechanika',
+            btnLabel: 'Edytuj mechanika',
+            formAction: '/mechanics/edit',
+            navLocation: 'mechanic',
+            validationErrors: validationErrors
         });
+    });
 };
 
 
@@ -65,10 +65,10 @@ exports.showMechanicDetails = (req, res, next) => {
 }
 
 exports.addMechanic = (req, res, next) => {
-    const mechData = { ...req.body };
+    const mechData = {...req.body};
 
     MechanicRepository.createMechanic(mechData)
-        .then( result => {
+        .then(result => {
             res.redirect('/mechanics');
         }).catch(err => {
         console.log(err.details);
@@ -86,10 +86,10 @@ exports.addMechanic = (req, res, next) => {
 
 exports.updateMechanic = (req, res, next) => {
     const mechId = req.body._id;
-    const mechData = { ...req.body };
+    const mechData = {...req.body};
 
     MechanicRepository.updateMechanic(mechId, mechData)
-        .then( result => {
+        .then(result => {
             res.redirect('/mechanics');
         })
         .catch(err => {
@@ -104,13 +104,13 @@ exports.updateMechanic = (req, res, next) => {
                 navLocation: 'mechanic',
                 validationErrors: err.details
             });
-    });
+        });
 };
 
 exports.deleteMechanic = (req, res, next) => {
     const mechId = req.params.mechId;
     MechanicRepository.deleteMechanic(mechId)
-        .then( (result) => {
+        .then((result) => {
             res.redirect('/mechanics');
         });
 };

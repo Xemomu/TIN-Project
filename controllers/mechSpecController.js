@@ -22,8 +22,11 @@ exports.showAddMechSpecForm = (req, res, next) => {
         })
         .then(mechs => {
             allMechs = mechs;
+            return SpecRepository.getSpecs();
+        })
+        .then(mechspec => {
             res.render('pages/mechSpec/mechanic-spec-form', {
-                mechspec: {},
+                mechspec: mechspec,
                 allMechs: allMechs,
                 allSpecs: allSpecs,
                 formMode: 'createNew',
@@ -56,8 +59,8 @@ exports.showEditMechSpecForm = (req, res, next) => {
                 formMode: 'edit',
                 allMechs: allMechs,
                 allSpecs: allSpecs,
-                pageTitle: 'Edycja Mechanik-Specjalizacja',
-                btnLabel: 'Edytuj Mechanik-Specjalizacja',
+                pageTitle: 'Zaktualizuj wpis',
+                btnLabel: 'Zaktualizuj wpis',
                 formAction: '/mechSpec/edit',
                 navLocation: 'mechSpec',
                 validationErrors: []
@@ -78,25 +81,27 @@ exports.showMechSpecDetails = (req, res, next) => {
             allSpecs = specs;
             return MechSpecRepository.getMechSpecById(mechSpecId)
         }).then(mechspec => {
-            res.render('pages/mechSpec/mechanic-spec-form', {
-                mechspec: mechspec,
-                formMode: 'showDetails',
-                allMechs: allMechs,
-                allSpecs: allSpecs,
-                pageTitle: 'Szczegóły Mechanik-Specjalizacja',
-                formAction: '',
-                navLocation: 'mechSpec',
-                validationErrors: []
-            });
+        res.render('pages/mechSpec/mechanic-spec-form', {
+            mechspec: mechspec,
+            formMode: 'showDetails',
+            allMechs: allMechs,
+            allSpecs: allSpecs,
+            pageTitle: 'Szczegóły wpisu',
+            formAction: '',
+            navLocation: 'mechSpec',
+            validationErrors: []
         });
+    });
 }
 
 exports.addMechSpec = (req, res, next) => {
+    const mechSpecData = {...req.body};
     let allMechs, allSpecs;
+
     console.log(req.body);
-    const mechSpecData = { ...req.body };
+
     MechSpecRepository.createMechSpec(mechSpecData)
-        .then( result => {
+        .then(result => {
             res.redirect('/mechSpec');
         })
         .catch(err => {
@@ -108,49 +113,62 @@ exports.addMechSpec = (req, res, next) => {
                 })
                 .then(specs => {
                     allSpecs = specs;
-            res.render('pages/mechSpec/mechanic-spec-form', {
-                mechspec: mechSpecData,
-                allMechs: allMechs,
-                allSpecs: allSpecs,
-                pageTitle: 'Nowy wpis',
-                formMode: 'createNew',
-                btnLabel: 'Dodaj wpis',
-                formAction: '/mechSpec/add',
-                navLocation: 'mechSpec',
-                validationErrors: err.details
-            });
+                    res.render('pages/mechSpec/mechanic-spec-form', {
+                        allMechs: allMechs,
+                        allSpecs: allSpecs,
+                        mechspec: mechSpecData,
+                        pageTitle: 'Nowy wpis',
+                        formMode: 'createNew',
+                        btnLabel: 'Dodaj wpis',
+                        formAction: '/mechSpec/add',
+                        navLocation: 'mechSpec',
+                        validationErrors: err.details
+                    });
+                });
         });
-    });
 };
 
 exports.updateMechSpec = (req, res, next) => {
-    console.log(req.body.id);
     const mechSpecId = req.body._id;
-    const mechSpecData = { ...req.body };
+    const mechSpecData = {...req.body};
+    let allMechs, allSpecs;
+
+    console.log(req.body.id);
+
     MechSpecRepository.updateMechSpec(mechSpecId, mechSpecData)
-        .then( result => {
+        .then(result => {
             res.redirect('/mechSpec');
         })
         .catch(err => {
             console.log(err.details);
-            res.render('pages/mechSpec/mechanic-spec-form', {
-                allMechs: {},
-                allSpecs: {},
-                mechspec: {},
-                pageTitle: 'Nowy wpis',
-                formMode: 'edit',
-                btnLabel: 'Zaktualizuj wpis',
-                formAction: '/mechSpec/add',
-                navLocation: 'mechSpec',
-                validationErrors: err.details
-            });
+            MechanicRepository.getMechanics()
+                .then(mechs => {
+                    allMechs = mechs;
+                    return SpecRepository.getSpecs();
+                })
+                .then(specs => {
+                    allSpecs = specs;
+
+                    console.log('----- update MechSpec ------')
+                    res.render('pages/mechSpec/mechanic-spec-form', {
+                        allMechs: allMechs,
+                        allSpecs: allSpecs,
+                        mechspec: mechSpecData,
+                        pageTitle: 'Zaktualizuj wpis',
+                        formMode: 'edit',
+                        btnLabel: 'Zaktualizuj wpis',
+                        formAction: '/mechSpec/edit',
+                        navLocation: 'mechSpec',
+                        validationErrors: err.details
+                    });
+                });
         });
 };
 
 exports.deleteMechSpec = (req, res, next) => {
     const mechSpecId = req.params.mechSpecId;
     MechSpecRepository.deleteMechSpec(mechSpecId)
-        .then( (result) => {
+        .then((result) => {
             res.redirect('/mechSpec');
         });
 };

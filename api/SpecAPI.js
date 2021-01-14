@@ -14,9 +14,9 @@ exports.getSpecById = (req, res, next) => {
     const specId = req.params.specId;
     SpecRepository.getSpecById(specId)
         .then(spec => {
-            if(!spec) {
+            if (!spec) {
                 res.status(404).json({
-                    message: 'Spec with id: '+specId+' not found'
+                    message: 'Spec with id: ' + specId + ' not found'
                 })
             } else {
                 res.status(200).json(spec);

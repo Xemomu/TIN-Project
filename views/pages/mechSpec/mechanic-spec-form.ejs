@@ -2,26 +2,26 @@
 <main>
     <script type="application/javascript" src="/js/validationMech-SpecForm.js"></script>
     <h2><%= pageTitle %></h2>
-    <form class="form-mechanic" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
-    <input type="hidden" name="_id" value="<%= mechspec._id %>">
+        <input type="hidden" name="_id" value="<%= mechspec._id %>">
 
-        <label for="mechanic">Mechanik: <abbr title="required" aria-label="required">*</abbr></label>
-        <select id="mechanic" name="mechId" required <%= (formMode === 'showDetails') ? 'disabled' : ''%> >
+        <label for="mechId">Mechanik: <abbr title="required" aria-label="required">*</abbr></label>
+        <select id="mechId" name="mechId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="" selected disabled>--- Wybierz mechanika ---</option>
             <% for (let i = 0; i < allMechs.length; i++) { let mech = allMechs[i]; %>
             <option value="<%= mech._id %>" label="<%= mech.firstName + ' ' + mech.lastName %>"
-                    <%= (mechspec._id && mech._id.toString() === mechspec.mechanic._id.toString()) ? 'selected' : ''%>></option>
+                    <%= (mechspec._id && mech._id.toString() === mechspec.mechanic._id.toString()) ? 'selected' : '' %>></option>
             <% } %>
         </select>
         <span id="errorMechanic" class="errors-text"></span>
 
         <label for="spec">Specjalizacja: <abbr title="required" aria-label="required">*</abbr></label>
-        <select id="spec" name="specId" required <%= (formMode === 'showDetails') ? 'disabled' : ''%> >
+        <select id="spec" name="specId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="" selected disabled>--- Wybierz specjalizację ---</option>
-            <% for (let i=0; i<allSpecs.length; i++) { let spec = allSpecs[i]; %>
+            <% for (let i = 0; i < allSpecs.length; i++) { let spec = allSpecs[i]; %>
             <option value="<%= spec._id %>" label="<%= spec.name %>"
-                    <%= (mechspec._id && spec._id.toString() === mechspec.spec._id.toString()) ? 'selected' : ''%>></option>
+                    <%= (mechspec._id && spec._id.toString() === mechspec.spec._id.toString()) ? 'selected' : '' %>></option>
             <% } %>
         </select>
         <span id="errorSpec" class="errors-text"></span>
@@ -34,19 +34,19 @@
         <label for="specLvl">Poziom zaawansowania: <abbr title="required" aria-label="required">*</abbr></label>
         <select id="specLvl" name="specLvl" <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="" selected disabled>--- Wybierz poziom ---</option>
-            <option value="1"  <%= (mechspec.specLvl === '1') ? 'selected' : ''%> >Średnio-zaawansowany</option>
-            <option value="2" <%= (mechspec.specLvl === '2') ? 'selected' : ''%> >Zaawansowany</option>
-            <option value="3" <%= (mechspec.specLvl === '3') ? 'selected' : ''%> >Ekspert</option>
+            <option value="1" <%= (mechspec.specLvl === '1') ? 'selected' : '' %> >Średnio-zaawansowany</option>
+            <option value="2" <%= (mechspec.specLvl === '2') ? 'selected' : '' %> >Zaawansowany</option>
+            <option value="3" <%= (mechspec.specLvl === '3') ? 'selected' : '' %> >Ekspert</option>
         </select>
         <span id="errorLvl" class="errors-text"></span>
 
         <div class="form-buttons">
             <p id="errorSummary" class="errors-text"></p>
             <% if (formMode !== 'showDetails') { %>
-            <input class="form-button-submit" type="submit" value="<%=btnLabel%>" />
+            <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
             <a class="form-button-cancel" href="/mechSpec">Anuluj</a>
             <% } else { %>
-                <a class="list-actions-button-edit" href="/mechSpec/edit/<%= mechspec._id %>" >Edytuj</a>
+                <a class="list-actions-button-edit" href="/mechSpec/edit/<%= mechspec._id %>">Edytuj</a>
                 <a class="button-back" href="/mechSpec">Powrót</a>
             <% } %>
         </div>

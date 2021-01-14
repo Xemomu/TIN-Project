@@ -65,34 +65,34 @@ exports.showSpecDetails = (req, res, next) => {
 }
 
 exports.addSpec = (req, res, next) => {
-    const specData = { ...req.body };
+    const specData = {...req.body};
     SpecRepository.createSpec(specData)
-        .then( result => {
+        .then(result => {
             res.redirect('/specs');
         })
         .catch(err => {
-        console.log(err.details);
-        res.render('pages/spec/spec-form', {
-            spec: specData,
-            pageTitle: 'Nowa specjalizacja',
-            formMode: 'createNew',
-            btnLabel: 'Dodaj specjalizację',
-            formAction: '/specs/add',
-            navLocation: 'spec',
-            validationErrors: err.details
+            console.log(err.details);
+            res.render('pages/spec/spec-form', {
+                spec: specData,
+                pageTitle: 'Nowa specjalizacja',
+                formMode: 'createNew',
+                btnLabel: 'Dodaj specjalizację',
+                formAction: '/specs/add',
+                navLocation: 'spec',
+                validationErrors: err.details
+            });
         });
-    });
 };
 
 exports.updateSpec = (req, res, next) => {
     const specId = req.body._id;
-    const specData = { ...req.body };
+    const specData = {...req.body};
     let error;
     const _id = specId;
     specData._id = _id;
 
     SpecRepository.updateSpec(specId, specData)
-        .then( result => {
+        .then(result => {
             res.redirect('/specs');
         })
         .catch(err => {
@@ -101,23 +101,23 @@ exports.updateSpec = (req, res, next) => {
         })
         .then(mechs => {
             res.render('pages/spec/spec-form', {
-            spec: specData,
-            specId: _id,
-            mechspecs: mechs,
-            formMode: 'edit',
-            pageTitle: 'Edycja specjalizacji',
-            btnLabel: 'Edytuj specjalizację',
-            formAction: '/specs/add',
-            navLocation: 'spec',
-            validationErrors: error.details
+                spec: specData,
+                specId: _id,
+                mechspecs: mechs,
+                formMode: 'edit',
+                pageTitle: 'Edycja specjalizacji',
+                btnLabel: 'Edytuj specjalizację',
+                formAction: '/specs/add',
+                navLocation: 'spec',
+                validationErrors: error.details
+            });
         });
-    });
 };
 
 exports.deleteSpec = (req, res, next) => {
     const specId = req.params.specId;
     SpecRepository.deleteSpec(specId)
-        .then( (result) => {
+        .then((result) => {
             res.redirect('/specs');
         });
 };
