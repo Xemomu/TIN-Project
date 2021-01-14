@@ -9,7 +9,7 @@ function validateForm() {
     const errorMechanic = document.getElementById('errorMechanic');
     const errorSpec = document.getElementById('errorSpec');
     const errorDateFrom = document.getElementById('errorDateFrom');
-    const errorLvl = document.getElementById('errorLvl');
+    const errorLvl = document.getElementById('errorSpecLvl');
     const errorSummary = document.getElementById('errorSummary');
 
     resetErrors([mechanicInput, specInput, dateFromInput, lvlInput], [errorMechanic, errorSpec, errorDateFrom, errorLvl], errorSummary);

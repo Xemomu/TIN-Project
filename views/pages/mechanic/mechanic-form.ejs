@@ -6,7 +6,7 @@
 
         <input type="hidden" name="_id" value="<%= mech._id %>">
 
-        <label for="firstName">Imię: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="firstName">Imię: <% if (formMode === 'createNew' || formMode === 'edit') { %> <abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%= mech.firstName %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('firstName')) ? 'error-input' : '' %>"/>
@@ -17,7 +17,7 @@
             <% } %>
         </span>
 
-        <label for="lastName">Nazwisko: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="lastName">Nazwisko: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mech.lastName %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('lastName')) ? 'error-input' : '' %>"/>
@@ -28,7 +28,7 @@
             <% } %>
         </span>
 
-        <label for="birthDate">Data urodzenia: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="birthDate">Data urodzenia: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
@@ -39,7 +39,7 @@
             <% } %>
         </span>
 
-        <label for="salary">Pensja (zł): <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="salary">Pensja (zł): <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mech.salary %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>"/>

@@ -6,7 +6,7 @@
 
         <input type="hidden" name="_id" value="<%= mechspec._id %>">
 
-        <label for="mechId">Mechanik: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="mechId">Mechanik: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <select id="mechId" name="mechId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="" selected disabled>--- Wybierz mechanika ---</option>
             <% for (let i = 0; i < allMechs.length; i++) { let mech = allMechs[i]; %>
@@ -16,7 +16,7 @@
         </select>
         <span id="errorMechanic" class="errors-text"></span>
 
-        <label for="spec">Specjalizacja: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="spec">Specjalizacja: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <select id="spec" name="specId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="" selected disabled>--- Wybierz specjalizację ---</option>
             <% for (let i = 0; i < allSpecs.length; i++) { let spec = allSpecs[i]; %>
@@ -26,19 +26,26 @@
         </select>
         <span id="errorSpec" class="errors-text"></span>
 
-        <label for="date">Data uzyskania specjalizacji: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="date">Data uzyskania specjalizacji: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="date" name="date" id="date" value="<%= mechspec.date %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorDateFrom" class="errors-text"></span>
 
-        <label for="specLvl">Poziom zaawansowania: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="specLvl">Poziom zaawansowania: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <select id="specLvl" name="specLvl" <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
+            <% if (formMode === 'createNew') { %>
             <option value="" selected disabled>--- Wybierz poziom ---</option>
             <option value="1" <%= (mechspec.specLvl === '1') ? 'selected' : '' %> >Średnio-zaawansowany</option>
             <option value="2" <%= (mechspec.specLvl === '2') ? 'selected' : '' %> >Zaawansowany</option>
             <option value="3" <%= (mechspec.specLvl === '3') ? 'selected' : '' %> >Ekspert</option>
+            <% } else { %>
+            <option value="" selected disabled>--- Wybierz poziom ---</option>
+            <option value="1" <%= (mechspec.specLvl.toString() === '1') ? 'selected' : '' %> >Średnio-zaawansowany</option>
+            <option value="2" <%= (mechspec.specLvl.toString() === '2') ? 'selected' : '' %> >Zaawansowany</option>
+            <option value="3" <%= (mechspec.specLvl.toString() === '3') ? 'selected' : '' %> >Ekspert</option>
+            <% } %>
         </select>
-        <span id="errorLvl" class="errors-text"></span>
+        <span id="errorSpecLvl" class="errors-text"></span>
 
         <div class="form-buttons">
             <p id="errorSummary" class="errors-text"></p>

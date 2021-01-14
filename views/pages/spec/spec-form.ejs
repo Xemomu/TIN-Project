@@ -6,7 +6,7 @@
 
         <input type="hidden" name="_id" value="<%= spec._id %>">
 
-        <label for="name">Nazwa: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="name">Nazwa: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="text" name="name" id="name" placeholder="2-80 znaków" value="<%= spec.name %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('name')) ? 'error-input' : '' %>"/>
@@ -17,7 +17,7 @@
             <% } %>
         </span>
 
-        <label for="university">Gdzie uzyskano: <abbr title="required" aria-label="required">*</abbr></label>
+        <label for="university">Gdzie uzyskano: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="text" name="university" id="university" placeholder="2-80 znaków" value="<%= spec.university %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('university')) ? 'error-input' : '' %>"/>
@@ -52,9 +52,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (let s of mechspecs) { %>
+                    <% for (let s of spec.mechspecs) { %>
                         <tr>
-                            <td><a class="href-button" href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech.lastName %></a></td>
+                            <td><a class="href-button" href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech. lastName %></a></td>
                             <td><%= s.date.toISOString().split('T')[0] %></td>
                             <% if(s.specLvl === 1) { %>
                                 <td>Średnio-zaawansowany</td>
