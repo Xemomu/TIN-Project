@@ -29,7 +29,7 @@
         </span>
 
         <label for="birthDate">Data urodzenia: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="date" name="birthDate" id="birthDate" value="<%= mech.birthDate %>"
+        <input type="date" name="birthDate" id="birthDate" value="<%= (formMode === 'createNew') ? ((mech.birthDate !== null) ? mech.birthDate : '') : mech.birthDate.toISOString().split('T')[0]%>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
 

@@ -57,7 +57,7 @@ exports.getSpecById = (specId) => {
                         _id: row.mechspec_id,
                         date: row.date,
                         specLvl: row.specLvl,
-                        mech: {
+                        mechanic: {
                             _id: row.mech_id,
                             firstName: firstRow.firstName,
                             lastName: firstRow.lastName,

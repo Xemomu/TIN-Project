@@ -42,7 +42,6 @@ exports.getMechanicById = (mechId) => {
             if (!firstRow) {
                 return {};
             }
-            // noinspection UnnecessaryLocalVariableJS
             const mech = {
                 _id: parseInt(mechId),
                 firstName: firstRow.firstName,

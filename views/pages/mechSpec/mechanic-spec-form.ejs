@@ -27,7 +27,7 @@
         <span id="errorSpec" class="errors-text"></span>
 
         <label for="date">Data uzyskania specjalizacji: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="date" name="date" id="date" value="<%= mechspec.date %>"
+        <input type="date" name="date" id="date" value="<%= (formMode === 'createNew') ? ((mechspec.date !== null) ? mechspec.date : '') : mechspec.date.toISOString().split('T')[0]%>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorDateFrom" class="errors-text"></span>
 

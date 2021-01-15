@@ -76,18 +76,14 @@ exports.getMechSpecById = (mechSpecId) => {
                 _id: parseInt(mechSpecId),
                 date: firstRow.date,
                 specLvl: firstRow.specLvl,
-                spec: {
-                    _id: firstRow.spec_id,
-                    name: firstRow.name,
-                    university: firstRow.university
-                },
-                mechanic: {
-                    _id: firstRow.mech_id,
-                    firstName: firstRow.firstName,
-                    lastName: firstRow.lastName,
-                    birthDate: firstRow.birthDate,
-                    salary: firstRow.salary,
-                }
+                spec_id: firstRow.spec_id,
+                name: firstRow.name,
+                university: firstRow.university,
+                mech_id: firstRow.mech_id,
+                firstName: firstRow.firstName,
+                lastName: firstRow.lastName,
+                birthDate: firstRow.birthDate,
+                salary: firstRow.salary,
             };
             console.log(mechspec);
             return mechspec;
