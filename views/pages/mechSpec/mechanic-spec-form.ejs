@@ -2,37 +2,65 @@
 <main>
     <script type="application/javascript" src="/js/validationMech-SpecForm.js"></script>
     <h2><%= pageTitle %></h2>
-    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+        <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate>
 
         <input type="hidden" name="_id" value="<%= mechspec._id %>">
 
-        <label for="mechId">Mechanik: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <select id="mechId" name="mechId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
+        <label for="mech_id">Mechanik: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
+        <select id="mech_id" name="mech_id" required <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+            class="<%= validationErrors.find(e => e.path.includes('mech_id')) ? 'error-input' : '' %>">
+
             <option value="" selected disabled>--- Wybierz mechanika ---</option>
-            <% for (let i = 0; i < allMechs.length; i++) { let mech = allMechs[i]; %>
-            <option value="<%= mech._id %>" label="<%= mech.firstName + ' ' + mech.lastName %>"
-                    <%= (mechspec._id && mech._id.toString() === mechspec.mechanic._id.toString()) ? 'selected' : '' %>></option>
+            <% for (let i = 0; i < allMechs.length; i++) { let mechanic = allMechs[i]; %>
+            <option value="<%= mechanic._id %>" label="<%= mechanic.firstName + ' ' + mechanic.lastName %>"
+            <% if (formMode === 'createNew') { %>
+                    <%= (mechanic._id.toString() === mechspec.mechanic._id) ? 'selected' : '' %>></option>
+            <% } else { %>
+                <%= (mechanic._id.toString() === mechspec.mechanic._id.toString()) ? 'selected' : '' %>></option>
+            <% } %>
             <% } %>
         </select>
-        <span id="errorMechanic" class="errors-text"></span>
+        <span id="errorMechanic" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('mech_id'))) { %>
+                <%= validationErrors.find(e => e.path.includes('mech_id')).message %>
+            <% } %>
+        </span>
 
-        <label for="spec">Specjalizacja: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <select id="spec" name="specId" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
+        <label for="spec_id">Specjalizacja: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
+
+            <select id="spec_id" name="spec_id" required <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+            class="<%= validationErrors.find(e => e.path.includes('spec_id')) ? 'error-input' : '' %>" >
             <option value="" selected disabled>--- Wybierz specjalizację ---</option>
             <% for (let i = 0; i < allSpecs.length; i++) { let spec = allSpecs[i]; %>
             <option value="<%= spec._id %>" label="<%= spec.name %>"
-                    <%= (mechspec._id && spec._id.toString() === mechspec.spec._id.toString()) ? 'selected' : '' %>></option>
+            <% if (formMode === 'createNew') { %>
+                    <%= (spec._id.toString() === mechspec.spec._id) ? 'selected' : '' %>></option>
+                <% } else { %>
+                    <%= (spec._id.toString() === mechspec.spec._id.toString()) ? 'selected' : '' %>></option>
+                <% } %>
             <% } %>
         </select>
-        <span id="errorSpec" class="errors-text"></span>
+
+        <span id="errorSpec" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('spec_id'))) { %>
+                <%= validationErrors.find(e => e.path.includes('spec_id')).message %>
+            <% } %>
+        </span>
 
         <label for="date">Data uzyskania specjalizacji: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="date" name="date" id="date" value="<%= (formMode === 'createNew') ? ((mechspec.date !== null) ? mechspec.date : '') : mechspec.date.toISOString().split('T')[0]%>"
+        <input type="date" name="date" id="date"
+               value="<%= (formMode === 'createNew') ? ((mechspec.date !== null) ? mechspec.date : '') : mechspec.date.toISOString().split('T')[0]%>"
+               class="<%= validationErrors.find(e => e.path.includes('date')) ? 'error-input' : '' %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
-        <span id="errorDateFrom" class="errors-text"></span>
+        <span id="errorDateFrom" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('date'))) { %>
+                <%= validationErrors.find(e => e.path.includes('date')).message %>
+            <% } %>
+        </span>
 
         <label for="specLvl">Poziom zaawansowania: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <select id="specLvl" name="specLvl" <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
+        <select id="specLvl" name="specLvl" <%= (formMode === 'showDetails') ? 'disabled' : '' %>
+            class="<%= validationErrors.find(e => e.path.includes('firstName')) ? 'error-input' : '' %>">
             <% if (formMode === 'createNew') { %>
             <option value="" selected disabled>--- Wybierz poziom ---</option>
             <option value="1" <%= (mechspec.specLvl === '1') ? 'selected' : '' %> >Średnio-zaawansowany</option>
@@ -45,7 +73,11 @@
             <option value="3" <%= (mechspec.specLvl.toString() === '3') ? 'selected' : '' %> >Ekspert</option>
             <% } %>
         </select>
-        <span id="errorSpecLvl" class="errors-text"></span>
+        <span id="errorSpecLvl" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('specLvl'))) { %>
+                <%= validationErrors.find(e => e.path.includes('specLvl')).message %>
+            <% } %>
+        </span>
 
         <div class="form-buttons">
             <p id="errorSummary" class="errors-text"></p>

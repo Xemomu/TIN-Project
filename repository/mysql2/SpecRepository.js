@@ -14,11 +14,11 @@ exports.getSpecs = () => {
         });
 };
 
-exports.getSpecMechSpec = (specId) => {
+exports.getSpecMechSpec = (spec_id) => {
     const query = `SELECT *
                    FROM MechSpec
                    WHERE spec_id = ?`;
-    return db.promise().query(query, [specId])
+    return db.promise().query(query, [spec_id])
         .then((results, fields) => {
             console.log(results[0]);
             return results[0];
@@ -29,7 +29,7 @@ exports.getSpecMechSpec = (specId) => {
         });
 }
 
-exports.getSpecById = (specId) => {
+exports.getSpecById = (spec_id) => {
     const query = `SELECT spec._id as _id, spec.name, spec.university, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, m._id as mech_id, m.firstName, m.lastName, m.birthDate, m.salary
                    FROM Spec spec
@@ -37,15 +37,15 @@ exports.getSpecById = (specId) => {
                    on mechspec.spec_id = spec._id
                        left join Mechanic m on mechspec.mech_id = m._id
                    where spec._id = ?`
-    return db.promise().query(query, [specId])
+    return db.promise().query(query, [spec_id])
         .then((results, fields) => {
             const firstRow = results[0][0];
             if (!firstRow) {
                 return {};
             }
-            // noinspection UnnecessaryLocalVariableJS
+
             const spec = {
-                _id: parseInt(specId),
+                _id: parseInt(spec_id),
                 name: firstRow.name,
                 university: firstRow.university,
                 mechspecs: []
@@ -88,23 +88,29 @@ exports.createSpec = (newSpecData) => {
     return db.promise().execute(sql, [name, university]);
 };
 
-exports.updateSpec = (specId, specData) => {
+exports.updateSpec = (spec_id, specData) => {
+    const vRes = specSchema.validate(specData, {abortEarly: false});
+    if (vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const name = specData.name;
     const university = specData.university;
+
     const sql = `UPDATE Spec
                  set name = ?,
                 university = ?
                  where _id = ?`;
-    return db.promise().execute(sql, [name, university, specId]);
+    return db.promise().execute(sql, [name, university, spec_id]);
 };
 
-exports.deleteSpec = (specId) => {
+exports.deleteSpec = (spec_id) => {
     const sql1 = 'DELETE FROM MechSpec where spec_id = ?'
     const sql2 = 'DELETE FROM Spec where _id = ?'
 
-    return db.promise().execute(sql1, [specId])
+    return db.promise().execute(sql1, [spec_id])
         .then(() => {
-            return db.promise().execute(sql2, [specId])
+            return db.promise().execute(sql2, [spec_id])
         });
 };
 

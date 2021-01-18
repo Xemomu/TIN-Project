@@ -14,6 +14,15 @@ exports.showMechSpecList = (req, res, next) => {
 
 exports.showAddMechSpecForm = (req, res, next) => {
     let allMechs, allSpecs;
+    const mechspec = {
+        _id: -1,
+        mechanic: {
+            _id: -1,
+        },
+        spec: {
+            _id: -1,
+        }
+    }
 
     SpecRepository.getSpecs()
         .then(specs => {
@@ -22,9 +31,6 @@ exports.showAddMechSpecForm = (req, res, next) => {
         })
         .then(mechs => {
             allMechs = mechs;
-            return SpecRepository.getSpecs();
-        })
-        .then(mechspec => {
             res.render('pages/mechSpec/mechanic-spec-form', {
                 mechspec: mechspec,
                 allMechs: allMechs,
@@ -42,7 +48,7 @@ exports.showAddMechSpecForm = (req, res, next) => {
 exports.showEditMechSpecForm = (req, res, next) => {
     console.log(req.body);
     let allMechs, allSpecs;
-    const mechSpecId = req.params.mechSpecId;
+    const mechSpecId = req.params.mechspec_id;
 
     MechanicRepository.getMechanics()
         .then(mechs => {
@@ -70,7 +76,7 @@ exports.showEditMechSpecForm = (req, res, next) => {
 
 exports.showMechSpecDetails = (req, res, next) => {
     let allMechs, allSpecs;
-    const mechSpecId = req.params.mechSpecId;
+    const mechSpecId = req.params.mechspec_id;
     console.log("Show spec details for specId");
     MechanicRepository.getMechanics()
         .then(mechs => {
@@ -105,6 +111,19 @@ exports.addMechSpec = (req, res, next) => {
             res.redirect('/mechSpec');
         })
         .catch(err => {
+            const mechspec = {
+                _id: -1,
+                mechanic: {
+                    _id: mechSpecData['mech_id']
+                },
+                spec: {
+                    _id: mechSpecData['spec_id']
+                },
+                specLvl: mechSpecData['specLvl'],
+                date: mechSpecData['date'],
+            }
+            console.log(mechSpecData.mech_id);
+            console.log(mechSpecData.spec_id);
             console.log(err.details);
             MechanicRepository.getMechanics()
                 .then(mechs => {
@@ -116,7 +135,7 @@ exports.addMechSpec = (req, res, next) => {
                     res.render('pages/mechSpec/mechanic-spec-form', {
                         allMechs: allMechs,
                         allSpecs: allSpecs,
-                        mechspec: mechSpecData,
+                        mechspec: mechspec,
                         pageTitle: 'Nowy wpis',
                         formMode: 'createNew',
                         btnLabel: 'Dodaj wpis',
@@ -133,7 +152,7 @@ exports.updateMechSpec = (req, res, next) => {
     const mechSpecData = {...req.body};
     let allMechs, allSpecs;
 
-    console.log(req.body.id);
+    console.log(req.body._id);
 
     MechSpecRepository.updateMechSpec(mechSpecId, mechSpecData)
         .then(result => {
@@ -148,8 +167,6 @@ exports.updateMechSpec = (req, res, next) => {
                 })
                 .then(specs => {
                     allSpecs = specs;
-
-                    console.log('----- update MechSpec ------')
                     res.render('pages/mechSpec/mechanic-spec-form', {
                         allMechs: allMechs,
                         allSpecs: allSpecs,
@@ -159,14 +176,14 @@ exports.updateMechSpec = (req, res, next) => {
                         btnLabel: 'Zaktualizuj wpis',
                         formAction: '/mechSpec/edit',
                         navLocation: 'mechSpec',
-                        validationErrors: err.details
+                        validationErrors: []
                     });
                 });
         });
 };
 
 exports.deleteMechSpec = (req, res, next) => {
-    const mechSpecId = req.params.mechSpecId;
+    const mechSpecId = req.params.mechspec_id;
     MechSpecRepository.deleteMechSpec(mechSpecId)
         .then((result) => {
             res.redirect('/mechSpec');

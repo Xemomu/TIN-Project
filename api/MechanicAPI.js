@@ -11,7 +11,7 @@ exports.getMechanics = (req, res, next) => {
 };
 
 exports.getMechanicById = (req, res, next) => {
-    const mechId = req.params.mechId;
+    const mechId = req.params.mech_id;
     MechanicRepository.getMechanicById(mechId)
         .then(mech => {
             if (!mech) {
@@ -38,10 +38,10 @@ exports.createMechanic = (req, res, next) => {
 };
 
 exports.updateMechanic = (req, res, next) => {
-    const mechId = req.params.mechId;
+    const mechId = req.params.mech_id;
     MechanicRepository.updateMechanic(mechId, req.body)
         .then(result => {
-            res.status(200).json({message: 'Mechanic updated!', mech: result});
+            res.status(200).json({message: 'Mechanic updated!', mechanic: result});
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -52,10 +52,10 @@ exports.updateMechanic = (req, res, next) => {
 };
 
 exports.deleteMechanic = (req, res, next) => {
-    const mechId = req.params.mechId;
+    const mechId = req.params.mech_id;
     MechanicRepository.deleteMechanic(mechId)
         .then(result => {
-            res.status(200).json({message: 'Removed mechanic', mech: result});
+            res.status(200).json({message: 'Removed mechanic', mechanic: result});
         })
         .catch(err => {
             if (!err.statusCode) {
@@ -64,4 +64,3 @@ exports.deleteMechanic = (req, res, next) => {
             next(err);
         });
 };
-

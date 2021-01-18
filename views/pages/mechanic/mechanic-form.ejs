@@ -2,12 +2,12 @@
 <main>
     <script type="application/javascript" src="/js/validationMechanicForm.js"></script>
     <h2><%= pageTitle %></h2>
-    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate>
 
-        <input type="hidden" name="_id" value="<%= mech._id %>">
+        <input type="hidden" name="_id" value="<%= mechanic._id %>">
 
         <label for="firstName">Imię: <% if (formMode === 'createNew' || formMode === 'edit') { %> <abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%= mech.firstName %>"
+        <input type="text" name="firstName" id="firstName" placeholder="2-60 znaków" value="<%= mechanic.firstName %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('firstName')) ? 'error-input' : '' %>"/>
 
@@ -18,7 +18,7 @@
         </span>
 
         <label for="lastName">Nazwisko: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mech.lastName %>"
+        <input type="text" name="lastName" id="lastName" placeholder="2-60 znaków" value="<%= mechanic.lastName %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('lastName')) ? 'error-input' : '' %>"/>
 
@@ -29,7 +29,7 @@
         </span>
 
         <label for="birthDate">Data urodzenia: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="date" name="birthDate" id="birthDate" value="<%= (formMode === 'createNew') ? ((mech.birthDate !== null) ? mech.birthDate : '') : mech.birthDate.toISOString().split('T')[0]%>"
+        <input type="date" name="birthDate" id="birthDate" value="<%= (formMode === 'createNew') ? ((mechanic.birthDate !== null) ? mechanic.birthDate : '') : mechanic.birthDate.toISOString().split('T')[0]%>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
 
@@ -40,7 +40,7 @@
         </span>
 
         <label for="salary">Pensja (zł): <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mech.salary %>"
+        <input type="number" name="salary" id="salary" placeholder="np. 4500" value="<%= mechanic.salary %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('salary')) ? 'error-input' : '' %>"/>
 
@@ -57,7 +57,7 @@
             <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
             <a class="form-button-cancel" href="/mechanics">Anuluj</a>
             <% } else { %>
-                <a class="list-actions-button-edit" href="/mechanics/edit/<%= mech._id %>">Edytuj</a>
+                <a class="list-actions-button-edit" href="/mechanics/edit/<%= mechanic._id %>">Edytuj</a>
                 <a class="button-back" href="/mechanics">Powrót</a>
             <% } %>
         </div>
@@ -76,7 +76,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (let m of mech.mechspecs) { %>
+                    <% for (let m of mechanic.mechspecs) { %>
                     <tr>
                         <td><a class="href-button" href="/specs/details/<%= m.spec._id %>"><%= m.spec.name %></a></td>
                         <td><%= m.date.toISOString().split('T')[0] %></td>

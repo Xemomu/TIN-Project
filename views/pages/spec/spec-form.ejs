@@ -2,7 +2,7 @@
 <%- include('../../fragments/header.ejs') %>
 <main>
     <h2><%= pageTitle %></h2>
-    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
+    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate>
 
         <input type="hidden" name="_id" value="<%= spec._id %>">
 
@@ -54,7 +54,7 @@
                     <tbody>
                     <% for (let s of spec.mechspecs) { %>
                         <tr>
-                            <td><a class="href-button" href="/mechanics/details/<%= s.mech._id %>"><%= s.mech.firstName + ' ' + s.mech. lastName %></a></td>
+                            <td><a class="href-button" href="/mechanics/details/<%= s.mechanic._id %>"><%= s.mechanic.firstName + ' ' + s.mechanic.lastName %></a></td>
                             <td><%= s.date.toISOString().split('T')[0] %></td>
                             <% if(s.specLvl === 1) { %>
                                 <td>Średnio-zaawansowany</td>

@@ -4,9 +4,9 @@ const router = express.Router();
 const mechSpecApiController = require('../../api/MechSpecAPI');
 
 router.get('/', mechSpecApiController.getMechSpecs);
-router.get('/:mechSpecId', mechSpecApiController.getMechSpecById);
+router.get('/:mechspec_id', mechSpecApiController.getMechSpecById);
 router.post('/', mechSpecApiController.createMechSpec);
-router.put('/:mechSpecId', mechSpecApiController.updateMechSpec);
-router.delete('/:mechSpecId', mechSpecApiController.deleteMechSpec);
+router.put('/:mechspec_id', mechSpecApiController.updateMechSpec);
+router.delete('/:mechspec_id', mechSpecApiController.deleteMechSpec);
 
 module.exports = router;

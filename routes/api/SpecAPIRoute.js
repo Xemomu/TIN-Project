@@ -4,9 +4,9 @@ const router = express.Router();
 const specApiController = require('../../api/SpecAPI');
 
 router.get('/', specApiController.getSpecs);
-router.get('/:specId', specApiController.getSpecById);
+router.get('/:spec_id', specApiController.getSpecById);
 router.post('/', specApiController.createSpec);
-router.put('/:specId', specApiController.updateSpec);
-router.delete('/:specId', specApiController.deleteSpec);
+router.put('/:spec_id', specApiController.updateSpec);
+router.delete('/:spec_id', specApiController.deleteSpec);
 
 module.exports = router;

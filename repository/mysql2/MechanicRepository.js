@@ -13,11 +13,11 @@ exports.getMechanics = () => {
         });
 };
 
-exports.getMechMechSpec = (mechId) => {
+exports.getMechMechSpec = (mech_id) => {
     const query = `SELECT *
                    FROM MechSpec
                    WHERE mech_id = ?`;
-    return db.promise().query(query, [mechId])
+    return db.promise().query(query, [mech_id])
         .then((results, fields) => {
             console.log(results[0]);
             return results[0];
@@ -28,7 +28,7 @@ exports.getMechMechSpec = (mechId) => {
         });
 }
 
-exports.getMechanicById = (mechId) => {
+exports.getMechanicById = (mech_id) => {
     const query = `SELECT m._id as _id, m.firstName, m.lastName, m.birthDate, m.salary, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, spec._id as spec_id, spec.name, spec.university
                    FROM Mechanic m
@@ -36,14 +36,14 @@ exports.getMechanicById = (mechId) => {
                    on mechspec.mech_id = m._id
                        left join Spec spec on mechspec.spec_id = spec._id
                    where m._id = ?`
-    return db.promise().query(query, [mechId])
+    return db.promise().query(query, [mech_id])
         .then((results, fields) => {
             const firstRow = results[0][0];
             if (!firstRow) {
                 return {};
             }
-            const mech = {
-                _id: parseInt(mechId),
+            const mechanic = {
+                _id: parseInt(mech_id),
                 firstName: firstRow.firstName,
                 lastName: firstRow.lastName,
                 birthDate: firstRow.birthDate,
@@ -63,10 +63,10 @@ exports.getMechanicById = (mechId) => {
                             university: row.university,
                         }
                     };
-                    mech.mechspecs.push(mechspec);
+                    mechanic.mechspecs.push(mechspec);
                 }
             }
-            return mech;
+            return mechanic;
         })
         .catch(err => {
             console.log(err);
@@ -89,7 +89,7 @@ exports.createMechanic = (newMechData) => {
     return db.promise().execute(sql, [firstName, lastName, birthDate, salary]);
 };
 
-exports.updateMechanic = (mechId, mechData) => {
+exports.updateMechanic = (mech_id, mechData) => {
     const vRes = mechSchema.validate(mechData, {abortEarly: false});
     if (vRes.error) {
         console.log("error returned " + vRes.error);
@@ -106,15 +106,15 @@ exports.updateMechanic = (mechId, mechData) => {
                      birthDate = ?,
                      salary    = ?
                  where _id = ?`;
-    return db.promise().execute(sql, [firstName, lastName, birthDate, salary, mechId]);
+    return db.promise().execute(sql, [firstName, lastName, birthDate, salary, mech_id]);
 };
 
-exports.deleteMechanic = (mechId) => {
+exports.deleteMechanic = (mech_id) => {
     const sql1 = 'DELETE FROM MechSpec where mech_id = ?'
     const sql2 = 'DELETE FROM Mechanic where _id = ?'
 
-    return db.promise().execute(sql1, [mechId])
+    return db.promise().execute(sql1, [mech_id])
         .then(() => {
-            return db.promise().execute(sql2, [mechId])
+            return db.promise().execute(sql2, [mech_id])
         });
 };

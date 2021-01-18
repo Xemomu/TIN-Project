@@ -10,6 +10,7 @@ services:
 
   mysql:
     image: mysql:latest
+
     container_name: dev_mysql
     ports:
       - "3306:3306"
@@ -18,6 +19,7 @@ services:
       MYSQL_PASSWORD: user
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: default_schema
+      TZ: Europe/Warsaw
     volumes:
       - "mysqldata:/var/lib/mysql"
 

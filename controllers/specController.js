@@ -26,7 +26,7 @@ exports.showAddSpecForm = (req, res, next) => {
 
 exports.showEditSpecForm = (req, res, next) => {
     const validationErrors = []
-    const specId = req.params.specId;
+    const specId = req.params.spec_id;
     SpecRepository.getSpecById(specId)
         .then(spec => {
             res.render('pages/spec/spec-form', {
@@ -44,17 +44,11 @@ exports.showEditSpecForm = (req, res, next) => {
 
 exports.showSpecDetails = (req, res, next) => {
     const validationErrors = []
-    const specId = req.params.specId;
-    let mechspecs;
-    SpecRepository.getSpecMechSpec(specId)
-        .then(mechs => {
-            mechspecs = mechs;
-            return SpecRepository.getSpecById(specId)
-        })
+    const spec_id = req.params.spec_id;
+    SpecRepository.getSpecById(spec_id)
         .then(spec => {
             res.render('pages/spec/spec-form', {
                 spec: spec,
-                mechspecs: mechspecs,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły specjalizacji',
                 formAction: '',
@@ -63,6 +57,28 @@ exports.showSpecDetails = (req, res, next) => {
             });
         });
 }
+// exports.showSpecDetails = (req, res, next) => {
+//     const validationErrors = []
+//     const spec_id = req.params.spec_id;
+//     let mechspecs;
+//
+//     SpecRepository.getSpecMechSpec(spec_id)
+//         .then(mechspcs => {
+//             mechspecs = mechspcs;
+//             return SpecRepository.getSpecById(spec_id)
+//         })
+//         .then(spec => {
+//             res.render('pages/spec/spec-form', {
+//                 spec: spec,
+//                 mechspecs: mechspecs,
+//                 formMode: 'showDetails',
+//                 pageTitle: 'Szczegóły specjalizacji',
+//                 formAction: '',
+//                 navLocation: 'spec',
+//                 validationErrors: validationErrors
+//             });
+//         });
+// }
 
 exports.addSpec = (req, res, next) => {
     const specData = {...req.body};
@@ -102,7 +118,7 @@ exports.updateSpec = (req, res, next) => {
         .then(mechs => {
             res.render('pages/spec/spec-form', {
                 spec: specData,
-                specId: _id,
+                _id: _id,
                 mechspecs: mechs,
                 formMode: 'edit',
                 pageTitle: 'Edycja specjalizacji',
@@ -115,10 +131,9 @@ exports.updateSpec = (req, res, next) => {
 };
 
 exports.deleteSpec = (req, res, next) => {
-    const specId = req.params.specId;
+    const specId = req.params.spec_id;
     SpecRepository.deleteSpec(specId)
         .then((result) => {
             res.redirect('/specs');
         });
 };
-

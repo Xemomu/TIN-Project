@@ -11,7 +11,7 @@ exports.getSpecs = (req, res, next) => {
 };
 
 exports.getSpecById = (req, res, next) => {
-    const specId = req.params.specId;
+    const specId = req.params.spec_id;
     SpecRepository.getSpecById(specId)
         .then(spec => {
             if (!spec) {
@@ -38,7 +38,7 @@ exports.createSpec = (req, res, next) => {
 };
 
 exports.updateSpec = (req, res, next) => {
-    const specId = req.params.specId;
+    const specId = req.params.spec_id;
     SpecRepository.updateSpec(specId, req.body)
         .then(result => {
             res.status(200).json({message: 'Spec updated!', spec: result});
@@ -52,7 +52,7 @@ exports.updateSpec = (req, res, next) => {
 };
 
 exports.deleteSpec = (req, res, next) => {
-    const specId = req.params.specId;
+    const specId = req.params.spec_id;
     SpecRepository.deleteSpec(specId)
         .then(result => {
             res.status(200).json({message: 'Removed spec', spec: result});

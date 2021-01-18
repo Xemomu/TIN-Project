@@ -3,9 +3,9 @@ const MechanicRepository = require('../repository/mysql2/MechanicRepository');
 
 exports.showMechanicList = (req, res, next) => {
     MechanicRepository.getMechanics()
-        .then(mechs => {
+        .then(mechanics => {
             res.render('pages/mechanic/mechanic-list', {
-                mechs: mechs,
+                mechanics: mechanics,
                 navLocation: 'mechanic'
             });
         });
@@ -14,7 +14,7 @@ exports.showMechanicList = (req, res, next) => {
 exports.showAddMechanicForm = (req, res, next) => {
     const validationErrors = []
     res.render('pages/mechanic/mechanic-form', {
-        mech: {},
+        mechanic: {},
         pageTitle: 'Nowy mechanik',
         formMode: 'createNew',
         btnLabel: 'Dodaj mechanika',
@@ -26,17 +26,12 @@ exports.showAddMechanicForm = (req, res, next) => {
 
 exports.showEditMechanicForm = (req, res, next) => {
     const validationErrors = []
-    const mechId = req.params.mechId;
-    let mechspecs;
-    MechanicRepository.getMechMechSpec(mechId)
-        .then(mechs => {
-            mechspecs = mechs;
-            return MechanicRepository.getMechanicById(mechId)
-        }).then(mech => {
+    const mech_id = req.params.mech_id;
+
+    MechanicRepository.getMechanicById(mech_id)
+        .then(mech => {
         res.render('pages/mechanic/mechanic-form', {
-            mech: mech,
-            mechId: mechId,
-            mechspecs: mechspecs,
+            mechanic: mech,
             formMode: 'edit',
             pageTitle: 'Edycja mechanika',
             btnLabel: 'Edytuj mechanika',
@@ -50,11 +45,11 @@ exports.showEditMechanicForm = (req, res, next) => {
 
 exports.showMechanicDetails = (req, res, next) => {
     const validationErrors = []
-    const mechId = req.params.mechId;
-    MechanicRepository.getMechanicById(mechId)
+    const mech_id = req.params.mech_id;
+    MechanicRepository.getMechanicById(mech_id)
         .then(mech => {
             res.render('pages/mechanic/mechanic-form', {
-                mech: mech,
+                mechanic: mech,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły mechanika',
                 formAction: '',
@@ -73,7 +68,7 @@ exports.addMechanic = (req, res, next) => {
         }).catch(err => {
         console.log(err.details);
         res.render('pages/mechanic/mechanic-form', {
-            mech: mechData,
+            mechanic: mechData,
             pageTitle: 'Dodawanie mechanika',
             formMode: 'createNew',
             btnLabel: 'Dodaj mechanika',
@@ -85,31 +80,33 @@ exports.addMechanic = (req, res, next) => {
 };
 
 exports.updateMechanic = (req, res, next) => {
-    const mechId = req.body._id;
+    const mech_id = req.body._id;
     const mechData = {...req.body};
-
-    MechanicRepository.updateMechanic(mechId, mechData)
+    
+    MechanicRepository.updateMechanic(mech_id, mechData)
         .then(result => {
             res.redirect('/mechanics');
         })
         .catch(err => {
-
+            return MechanicRepository.getMechanicById(mech_id)
+            .then(mech => {
             console.log(err.details);
             res.render('pages/mechanic/mechanic-form', {
-                mech: mechData,
-                formMode: 'edit',
+                mechanic: mech,
                 pageTitle: 'Edycja mechanika',
+                formMode: 'edit',
                 btnLabel: 'Edytuj mechanika',
                 formAction: '/mechanics/edit',
                 navLocation: 'mechanic',
                 validationErrors: err.details
             });
         });
+    });
 };
 
 exports.deleteMechanic = (req, res, next) => {
-    const mechId = req.params.mechId;
-    MechanicRepository.deleteMechanic(mechId)
+    const mech_id = req.params.mech_id;
+    MechanicRepository.deleteMechanic(mech_id)
         .then((result) => {
             res.redirect('/mechanics');
         });

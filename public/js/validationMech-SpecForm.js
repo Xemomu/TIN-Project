@@ -1,8 +1,8 @@
 function validateForm() {
     console.log("validating mechSpec form");
 
-    const mechanicInput = document.getElementById('mechId');
-    const specInput = document.getElementById('spec');
+    const mechanicInput = document.getElementById('mech_id');
+    const specInput = document.getElementById('spec_id');
     const dateFromInput = document.getElementById('date');
     const lvlInput = document.getElementById('specLvl');
 

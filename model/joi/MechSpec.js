@@ -30,6 +30,9 @@ const errMessages = (errors) => {
             case "string.base":
                 err.message = `Pole jest wymagane`;
                 break;
+            case "any.required":
+                err.message = `Pole jest wymagane`;
+                break;
             default:
                 break;
         }
@@ -44,10 +47,10 @@ const mechSchema = Joi.object({
         .optional()
         .allow("")
         .error(errMessages),
-    mechId: Joi.string()
+    mech_id: Joi.string()
         .required()
         .error(errMessages),
-    specId: Joi.string()
+    spec_id: Joi.string()
         .required()
         .error(errMessages),
     date: Joi.date()
