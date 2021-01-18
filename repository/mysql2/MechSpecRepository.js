@@ -68,25 +68,25 @@ exports.getMechSpecById = (mechspec_id) => {
         where mechspec._id = ?`
     return db.promise().query(query, [mechspec_id])
         .then((results, fields) => {
-            const firstRow = results[0][0];
-            if (!firstRow) {
+            const row = results[0][0];
+            if (!row) {
                 return {};
             }
             const mechspec = {
                 _id: parseInt(mechspec_id),
-                date: firstRow.date,
-                specLvl: firstRow.specLvl,
+                date: row.date,
+                specLvl: row.specLvl,
                 spec: {
-                    _id: firstRow.spec_id,
-                    name: firstRow.name,
-                    university: firstRow.university,
+                    _id: row.spec_id,
+                    name: row.name,
+                    university: row.university,
                 },
                 mechanic:{
-                    _id: firstRow.mech_id,
-                    firstName: firstRow.firstName,
-                    lastName: firstRow.lastName,
-                    birthDate: firstRow.birthDate,
-                    salary: firstRow.salary,
+                    _id: row.mech_id,
+                    firstName: row.firstName,
+                    lastName: row.lastName,
+                    birthDate: row.birthDate,
+                    salary: row.salary,
                 }
             };
             console.log(mechspec);
@@ -118,7 +118,7 @@ exports.updateMechSpec = (mechspec_id, mechSpecData) => {
     }
     const sql = `UPDATE MechSpec set mech_id = ?, spec_id = ?, date = ?, specLvl = ?
                  where _id = ?`;
-    return db.promise().execute(sql, [mechSpecData.mech_id, mechSpecData.mech_id, mechSpecData.date, mechSpecData.specLvl, mechspec_id]);
+    return db.promise().execute(sql, [mechSpecData.mech_id, mechSpecData.spec_id, mechSpecData.date, mechSpecData.specLvl, mechspec_id]);
 };
 
 exports.deleteMechSpec = (mechspec_id) => {

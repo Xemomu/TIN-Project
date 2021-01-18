@@ -49,7 +49,11 @@
 
         <label for="date">Data uzyskania specjalizacji: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
         <input type="date" name="date" id="date"
-               value="<%= (formMode === 'createNew') ? ((mechspec.date !== null) ? mechspec.date : '') : mechspec.date.toISOString().split('T')[0]%>"
+                <% if (formMode !== "createNew") { %>
+               value="<%=new Date(mechspec.date.getTime() - (mechspec.date.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]%>"
+                <% } else { %>
+               value="<%=mechspec.date%>"
+                <% } %>
                class="<%= validationErrors.find(e => e.path.includes('date')) ? 'error-input' : '' %>"
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorDateFrom" class="errors-text">

@@ -45,6 +45,7 @@ exports.showEditSpecForm = (req, res, next) => {
 exports.showSpecDetails = (req, res, next) => {
     const validationErrors = []
     const spec_id = req.params.spec_id;
+    
     SpecRepository.getSpecById(spec_id)
         .then(spec => {
             res.render('pages/spec/spec-form', {

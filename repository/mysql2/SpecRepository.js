@@ -33,8 +33,7 @@ exports.getSpecById = (spec_id) => {
     const query = `SELECT spec._id as _id, spec.name, spec.university, mechspec._id as mechspec_id,
         mechspec.date, mechspec.specLvl, m._id as mech_id, m.firstName, m.lastName, m.birthDate, m.salary
                    FROM Spec spec
-                       left join MechSpec mechspec
-                   on mechspec.spec_id = spec._id
+                       left join MechSpec mechspec on mechspec.spec_id = spec._id
                        left join Mechanic m on mechspec.mech_id = m._id
                    where spec._id = ?`
     return db.promise().query(query, [spec_id])
@@ -45,7 +44,7 @@ exports.getSpecById = (spec_id) => {
             }
 
             const spec = {
-                _id: parseInt(spec_id),
+                _id: spec_id,
                 name: firstRow.name,
                 university: firstRow.university,
                 mechspecs: []
@@ -59,10 +58,10 @@ exports.getSpecById = (spec_id) => {
                         specLvl: row.specLvl,
                         mechanic: {
                             _id: row.mech_id,
-                            firstName: firstRow.firstName,
-                            lastName: firstRow.lastName,
-                            birthDate: firstRow.birthDate,
-                            salary: firstRow.salary,
+                            firstName: row.firstName,
+                            lastName: row.lastName,
+                            birthDate: row.birthDate,
+                            salary: row.salary,
                         }
                     };
                     spec.mechspecs.push(mechspec);

@@ -59,12 +59,12 @@ exports.showEditMechSpecForm = (req, res, next) => {
             allSpecs = specs;
             return MechSpecRepository.getMechSpecById(mechSpecId)
         })
-        .then(mechspec => {
+        .then(mchspec => {
             res.render('pages/mechSpec/mechanic-spec-form', {
-                mechspec: mechspec,
-                formMode: 'edit',
+                mechspec: mchspec,
                 allMechs: allMechs,
                 allSpecs: allSpecs,
+                formMode: 'edit',
                 pageTitle: 'Zaktualizuj wpis',
                 btnLabel: 'Zaktualizuj wpis',
                 formAction: '/mechSpec/edit',
@@ -78,6 +78,7 @@ exports.showMechSpecDetails = (req, res, next) => {
     let allMechs, allSpecs;
     const mechSpecId = req.params.mechspec_id;
     console.log("Show spec details for specId");
+
     MechanicRepository.getMechanics()
         .then(mechs => {
             allMechs = mechs;
@@ -89,9 +90,9 @@ exports.showMechSpecDetails = (req, res, next) => {
         }).then(mechspec => {
         res.render('pages/mechSpec/mechanic-spec-form', {
             mechspec: mechspec,
-            formMode: 'showDetails',
             allMechs: allMechs,
             allSpecs: allSpecs,
+            formMode: 'showDetails',
             pageTitle: 'Szczegóły wpisu',
             formAction: '',
             navLocation: 'mechSpec',
@@ -167,19 +168,22 @@ exports.updateMechSpec = (req, res, next) => {
                 })
                 .then(specs => {
                     allSpecs = specs;
+                    return MechSpecRepository.getMechSpecById(mechSpecId)
+                .then(mechsp => {
                     res.render('pages/mechSpec/mechanic-spec-form', {
                         allMechs: allMechs,
                         allSpecs: allSpecs,
-                        mechspec: mechSpecData,
+                        mechspec: mechsp,
                         pageTitle: 'Zaktualizuj wpis',
                         formMode: 'edit',
                         btnLabel: 'Zaktualizuj wpis',
                         formAction: '/mechSpec/edit',
                         navLocation: 'mechSpec',
-                        validationErrors: []
+                        validationErrors: err.details
                     });
                 });
         });
+    });
 };
 
 exports.deleteMechSpec = (req, res, next) => {

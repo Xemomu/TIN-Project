@@ -55,7 +55,7 @@
                     <% for (let s of spec.mechspecs) { %>
                         <tr>
                             <td><a class="href-button" href="/mechanics/details/<%= s.mechanic._id %>"><%= s.mechanic.firstName + ' ' + s.mechanic.lastName %></a></td>
-                            <td><%= s.date.toISOString().split('T')[0] %></td>
+                            <td><%= new Date(s.date.getTime() - (s.date.getTimezoneOffset()*60*1000)).toISOString().split('T')[0] %></td>
                             <% if(s.specLvl === 1) { %>
                                 <td>Średnio-zaawansowany</td>
                             <% } else if (s.specLvl === 2){ %>

@@ -29,7 +29,12 @@
         </span>
 
         <label for="birthDate">Data urodzenia: <% if (formMode === 'createNew' || formMode === 'edit') { %><abbr title="required" aria-label="required">*</abbr><% } %></label>
-        <input type="date" name="birthDate" id="birthDate" value="<%= (formMode === 'createNew') ? ((mechanic.birthDate !== null) ? mechanic.birthDate : '') : mechanic.birthDate.toISOString().split('T')[0]%>"
+        <input type="date" name="birthDate" id="birthDate"
+              <% if (formMode !== "createNew") { %>
+               value="<%=new Date(mechanic.birthDate.getTime() - (mechanic.birthDate.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]%>"
+        <% } else { %>
+               value="<%=mechanic.birthDate%>"
+        <% } %>
                 <%= (formMode === 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('birthDate')) ? 'error-input' : '' %>"/>
 
