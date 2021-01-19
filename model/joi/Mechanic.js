@@ -6,11 +6,14 @@ const errMessages = (errors) => {
             case "string.empty":
                 err.message = "Pole jest wymagane";
                 break;
+            case "string.pattern.invert.base":
+                err.message = 'Pole zawiera niedozwolone znaki!';
+                break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
             case "string.max":
-                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
+                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaków`;
                 break;
             case "number.min":
                 err.message = `Wartość powinna wynosić co najmniej ${err.local.limit} zł`;
@@ -27,6 +30,10 @@ const errMessages = (errors) => {
             case "number.base":
                 err.message = `Pole jest wymagane`;
                 break;
+            case "number.default":
+                err.message = `Pole powinno być liczbą z zakresu (2000 - 1000000)`;
+                break;
+
             default:
                 break;
         }
@@ -34,6 +41,7 @@ const errMessages = (errors) => {
     return errors;
 }
 
+const specialCharacters = new RegExp(/^.*[@#?`!';<>{}$].*$/s);
 const now = Date.now();
 
 const mechSchema = Joi.object({
@@ -44,11 +52,13 @@ const mechSchema = Joi.object({
     firstName: Joi.string()
         .min(2)
         .max(60)
+        .regex(specialCharacters, { invert: true })
         .required()
         .error(errMessages),
     lastName: Joi.string()
         .min(2)
         .max(60)
+        .regex(specialCharacters, { invert: true })
         .required()
         .error(errMessages),
     birthDate: Joi.date()

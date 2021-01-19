@@ -10,7 +10,7 @@ const errMessages = (errors) => {
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
             case "string.max":
-                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
+                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaków`;
                 break;
             case "number.min":
                 err.message = `Wybierz spośród podanych poziomów ${err.local.limit}`;

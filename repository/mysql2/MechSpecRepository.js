@@ -63,7 +63,7 @@ exports.getMechSpecById = (mechspec_id) => {
                           m.birthDate,
                           m.salary
                    FROM MechSpec mechspec
-                       left join Mechanic m on mechspec.mech_id = mech_id
+                       left join Mechanic m on mechspec.mech_id = m._id
                        left join Spec spec on mechspec.spec_id = spec._id
         where mechspec._id = ?`
     return db.promise().query(query, [mechspec_id])

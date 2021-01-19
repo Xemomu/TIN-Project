@@ -87,9 +87,9 @@ exports.showMechSpecDetails = (req, res, next) => {
         .then(specs => {
             allSpecs = specs;
             return MechSpecRepository.getMechSpecById(mechSpecId)
-        }).then(mechspec => {
+        }).then(mchspec => {
         res.render('pages/mechSpec/mechanic-spec-form', {
-            mechspec: mechspec,
+            mechspec: mchspec,
             allMechs: allMechs,
             allSpecs: allSpecs,
             formMode: 'showDetails',

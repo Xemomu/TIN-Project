@@ -6,11 +6,14 @@ const errMessages = (errors) => {
             case "string.empty":
                 err.message = "Pole jest wymagane";
                 break;
+            case "string.pattern.invert.base":
+                err.message = 'Pole zawiera niedozwolone znaki!';
+                break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
             case "string.max":
-                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
+                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaków`;
                 break;
             default:
                 break;
@@ -19,6 +22,7 @@ const errMessages = (errors) => {
     return errors;
 }
 
+const specialCharacters = new RegExp(/^.*[@#?`!';<>{}$].*$/s);
 
 const specSchema = Joi.object({
     _id: Joi.number()
@@ -28,11 +32,13 @@ const specSchema = Joi.object({
     name: Joi.string()
         .min(2)
         .max(80)
+        .regex(specialCharacters, { invert: true })
         .required()
         .error(errMessages),
     university: Joi.string()
         .min(2)
         .max(80)
+        .regex(specialCharacters, { invert: true })
         .required()
         .error(errMessages)
 });
