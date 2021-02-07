@@ -2,7 +2,7 @@
 <main>
     <script type="application/javascript" src="/js/validationMechanicForm.js"></script>
     <h2><%= pageTitle %></h2>
-    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate>
+    <form class="form-mechanic" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
         <input type="hidden" name="_id" value="<%= mechanic._id %>">
 
@@ -84,7 +84,7 @@
                     <% for (let m of mechanic.mechspecs) { %>
                     <tr>
                         <td><a class="href-button" href="/specs/details/<%= m.spec._id %>"><%= m.spec.name %></a></td>
-                        <td><%= m.date.toISOString().split('T')[0] %></td>
+                        <td><%= new Date(m.date.getTime() - (m.date.getTimezoneOffset()*60*1000)).toLocaleDateString().split('T')[0] %></td>
                         <% if(m.specLvl === 1) { %>
                             <td>Średnio-zaawansowany</td>
                         <% } else if (m.specLvl === 2){ %>

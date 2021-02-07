@@ -9,6 +9,9 @@ const errMessages = (errors) => {
             case "string.pattern.invert.base":
                 err.message = 'Pole zawiera niedozwolone znaki!';
                 break;
+            case "number.disallow":
+                err.message = 'Pole zawiera niedozwolone znaki!';
+                break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
@@ -30,10 +33,7 @@ const errMessages = (errors) => {
             case "number.base":
                 err.message = `Pole jest wymagane`;
                 break;
-            case "number.default":
-                err.message = `Pole powinno być liczbą z zakresu (2000 - 1000000)`;
-                break;
-
+                // err.message = `Pole powinno być liczbą z zakresu (2000 - 1000000)`;
             default:
                 break;
         }
@@ -68,6 +68,7 @@ const mechSchema = Joi.object({
     salary: Joi.number()
         .min(2000)
         .max(1000000)
+        .disallow(new RegExp(/^.*[@#?`!';<>{}$].*$/s))
         .required()
         .error(errMessages),
 });
